@@ -942,4 +942,8 @@ const (
 	// FlagRestoreDashboards
 	// Enables restore deleted dashboards feature
 	FlagRestoreDashboards = "restoreDashboards"
+
+	// FlagNewDataSourceConfigPageDesign
+	// Enables new design for data source configuration pages
+	FlagNewDataSourceConfigPageDesign = "newDataSourceConfigPageDesign"
 )

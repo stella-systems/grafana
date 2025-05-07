@@ -1781,6 +1781,14 @@ var (
 			HideFromAdminPage: true,
 			Expression:        "false",
 		},
+		{
+			Name:         "newDataSourceConfigPageDesign",
+			Description:  "Enables new design for data source configuration pages",
+			Stage:        FeatureStagePrivatePreview,
+			FrontendOnly: false,
+			Owner:        grafanaPartnerPluginsSquad,
+			Expression:   "false",
+		},
 	}
 )
 
