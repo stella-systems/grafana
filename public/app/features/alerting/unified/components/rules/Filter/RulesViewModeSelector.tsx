@@ -11,11 +11,11 @@ export type SupportedView = 'list' | 'grouped';
 type LegacySupportedView = 'list' | 'grouped' | 'state';
 
 const ViewOptions: Array<SelectableValue<SupportedView>> = [
-  { icon: 'folder', label: 'Grouped', value: 'grouped' },
-  { icon: 'list-ul', label: 'List', value: 'list' },
+  { icon: 'folder', value: 'grouped' },
+  { icon: 'list-ul', value: 'list' },
 ];
 
-function RulesViewModeSelectorV2() {
+export function RulesViewModeSelectorV2() {
   const [queryParams, updateQueryParams] = useURLSearchParams();
   const { hasActiveFilters } = useRulesFilter();
   const wantsListView = queryParams.get('view') === 'list';

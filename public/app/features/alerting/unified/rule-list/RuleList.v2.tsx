@@ -6,6 +6,7 @@ import { Button, Dropdown, Icon, LinkButton, Menu, Stack } from '@grafana/ui';
 import { AlertingPageWrapper } from '../components/AlertingPageWrapper';
 import RulesFilter from '../components/rules/Filter/RulesFilter';
 import { SupportedView } from '../components/rules/Filter/RulesViewModeSelector';
+import { RuleListErrors } from '../components/rules/RuleListErrors';
 import { AlertingAction, useAlertingAbility } from '../hooks/useAbilities';
 import { useRulesFilter } from '../hooks/useFilteredRules';
 import { useURLSearchParams } from '../hooks/useURLSearchParams';
@@ -22,10 +23,11 @@ function RuleList() {
   const showListView = hasActiveFilters || view === 'list';
 
   return (
-    <>
+    <Stack direction="column" gap={2}>
+      <RuleListErrors />
       <RulesFilter onClear={() => {}} />
       {showListView ? <FilterView filterState={filterState} /> : <GroupedView />}
-    </>
+    </Stack>
   );
 }
 
