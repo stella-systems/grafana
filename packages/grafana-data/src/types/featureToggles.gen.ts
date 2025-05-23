@@ -1039,6 +1039,7 @@ export interface FeatureToggles {
   restoreDashboards?: boolean;
   /**
   * Enables new design for data source configuration pages
+  * @default false
   */
-  newDataSourceConfigPageDesign?: boolean;
+  newInfluxDSConfigPageDesign?: boolean;
 }
