@@ -1199,7 +1199,7 @@ export function getFieldConfig(
   };
 }
 
-function makeHistogramLink(
+export function makeHistogramLink(
   datasourceUid: string,
   source: string,
   target: string,
@@ -1333,7 +1333,7 @@ function makeTempoLinkServiceMap(
   };
 }
 
-function makePromServiceMapRequest(options: DataQueryRequest<TempoQuery>, histogramType?: string): DataQueryRequest<PromQuery> {
+export function makePromServiceMapRequest(options: DataQueryRequest<TempoQuery>, histogramType?: string): DataQueryRequest<PromQuery> {
   return {
     ...options,
     targets: serviceMapMetrics
