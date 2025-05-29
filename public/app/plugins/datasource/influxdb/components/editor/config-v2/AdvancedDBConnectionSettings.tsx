@@ -43,7 +43,7 @@ export const AdvancedDbConnectionSettings = (props: Props) => {
                   label="HTTP Method"
                   labelWidth={30}
                   tooltip="You can use either GET or POST HTTP method to query your InfluxDB database. The POST
-                      method allows you to perform heavy requests (with a lots of WHERE clause) while the GET method
+                      method allows you to perform heavy requests (with many WHERE clauses') while the GET method
                       will restrict you and return an error if the query is too large."
                 >
                   <Combobox
