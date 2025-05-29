@@ -12,6 +12,7 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/experimental/apis/data/v0alpha1"
 	"github.com/grafana/grafana/pkg/registry/apis/query/clientapi"
 	"github.com/grafana/grafana/pkg/services/datasources"
+	"github.com/grafana/grafana/pkg/services/featuremgmt"
 	"github.com/grafana/grafana/pkg/services/ngalert/models"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
@@ -92,7 +93,6 @@ func (r *queryREST) Connect(connectCtx context.Context, name string, _ runtime.O
 		ctx, span := b.tracer.Start(httpreq.Context(), "QueryService.Query")
 		defer span.End()
 		ctx = request.WithNamespace(ctx, request.NamespaceValue(connectCtx))
-
 		responder := newResponderWrapper(incomingResponder,
 			func(statusCode int, obj runtime.Object) {
 				if statusCode >= 400 {
@@ -123,8 +123,18 @@ func (r *queryREST) Connect(connectCtx context.Context, name string, _ runtime.O
 			responder.Error(err)
 			return
 		}
+		// Fetch information on the grafana instance (e.g. feature toggles)
+		instanceConfig, err := b.clientSupplier.GetInstanceConfigurationSettings(ctx)
+		if err != nil {
+			b.log.Error("failed to get instance configuration settings", "err", err)
+			responder.Error(errors.New("failed to get instance configuration settings before making query"))
+			return
+		}
+
 		// Parses the request and splits it into multiple sub queries (if necessary)
-		req, err := b.parser.parseRequest(ctx, raw)
+		sqlExpressions := instanceConfig.FeatureToggles.IsEnabledGlobally(featuremgmt.FlagSqlExpressions)
+		sqlExpressionCellLimit := instanceConfig.SQLExpressionCellLimit
+		req, err := b.parser.parseRequest(ctx, raw, sqlExpressions, sqlExpressionCellLimit)
 		if err != nil {
 			var refError ErrorWithRefID
 			statusCode := http.StatusBadRequest
@@ -159,12 +169,6 @@ func (r *queryREST) Connect(connectCtx context.Context, name string, _ runtime.O
 
 		for i := range req.Requests {
 			req.Requests[i].Headers = ExtractKnownHeaders(httpreq.Header)
-		}
-
-		// Fetch information on the grafana instance (e.g. feature toggles)
-		instanceConfig, err := b.clientSupplier.GetInstanceConfigurationSettings(ctx)
-		if err != nil {
-			b.log.Error("failed to get instance configuration settings", "err", err)
 		}
 
 		// Actually run the query (includes expressions)
