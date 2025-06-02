@@ -42,63 +42,6 @@ type gPRCServerService struct {
 	startedChan chan struct{}
 }
 
-func ProvideServiceWithNoAuth(cfg *setting.Cfg, features featuremgmt.FeatureToggles, tracer trace.Tracer, registerer prometheus.Registerer) (Provider, error) {
-	s := &gPRCServerService{
-		cfg:         cfg.GRPCServer,
-		logger:      log.New("grpc-server"),
-		enabled:     features.IsEnabledGlobally(featuremgmt.FlagGrpcServer), // TODO: replace with cfg.GRPCServer.Enabled when we remove feature toggle.
-		startedChan: make(chan struct{}),
-	}
-
-	// Register the metric here instead of an init() function so that we do
-	// nothing unless the feature is actually enabled.
-	if grpcRequestDuration == nil {
-		grpcRequestDuration = prometheus.NewHistogramVec(prometheus.HistogramOpts{
-			Namespace:                       "grafana",
-			Name:                            "grpc_request_duration_seconds",
-			Help:                            "Time (in seconds) spent serving gRPC calls.",
-			Buckets:                         instrument.DefBuckets,
-			NativeHistogramBucketFactor:     1.1, // enable native histograms
-			NativeHistogramMaxBucketNumber:  160,
-			NativeHistogramMinResetDuration: time.Hour,
-		}, []string{"method", "route", "status_code", "ws"})
-
-		if err := registerer.Register(grpcRequestDuration); err != nil {
-			return nil, err
-		}
-	}
-
-	// Default auth is admin token check, but this can be overridden by
-	// services which implement ServiceAuthFuncOverride interface.
-	// See https://github.com/grpc-ecosystem/go-grpc-middleware/blob/main/interceptors/auth/auth.go#L30.
-	opts := []grpc.ServerOption{
-		grpc.StatsHandler(otelgrpc.NewServerHandler()),
-		grpc.ChainUnaryInterceptor(
-			interceptors.LoggingUnaryInterceptor(s.logger, s.cfg.EnableLogging), // needs to be registered after tracing interceptor to get trace id
-			middleware.UnaryServerInstrumentInterceptor(grpcRequestDuration),
-		),
-		grpc.ChainStreamInterceptor(
-			interceptors.TracingStreamInterceptor(tracer),
-			middleware.StreamServerInstrumentInterceptor(grpcRequestDuration),
-		),
-	}
-
-	if s.cfg.TLSConfig != nil {
-		opts = append(opts, grpc.Creds(credentials.NewTLS(s.cfg.TLSConfig)))
-	}
-
-	if s.cfg.MaxRecvMsgSize > 0 {
-		opts = append(opts, grpc.MaxRecvMsgSize(s.cfg.MaxRecvMsgSize))
-	}
-
-	if s.cfg.MaxSendMsgSize > 0 {
-		opts = append(opts, grpc.MaxSendMsgSize(s.cfg.MaxSendMsgSize))
-	}
-
-	s.server = grpc.NewServer(opts...)
-	return s, nil
-}
-
 func ProvideService(cfg *setting.Cfg, features featuremgmt.FeatureToggles, authenticator interceptors.Authenticator, tracer trace.Tracer, registerer prometheus.Registerer) (Provider, error) {
 	s := &gPRCServerService{
 		cfg:         cfg.GRPCServer,
@@ -125,21 +68,27 @@ func ProvideService(cfg *setting.Cfg, features featuremgmt.FeatureToggles, authe
 		}
 	}
 
+	unaryInterceptors := []grpc.UnaryServerInterceptor{
+		interceptors.LoggingUnaryInterceptor(s.logger, s.cfg.EnableLogging), // needs to be registered after tracing interceptor to get trace id
+		middleware.UnaryServerInstrumentInterceptor(grpcRequestDuration),
+	}
+	streamInterceptors := []grpc.StreamServerInterceptor{
+		interceptors.TracingStreamInterceptor(tracer),
+		middleware.StreamServerInstrumentInterceptor(grpcRequestDuration),
+	}
+
+	if authenticator != nil {
+		unaryInterceptors = append(unaryInterceptors, grpcAuth.UnaryServerInterceptor(authenticator.Authenticate))
+		streamInterceptors = append(streamInterceptors, grpcAuth.StreamServerInterceptor(authenticator.Authenticate))
+	}
+
 	// Default auth is admin token check, but this can be overridden by
 	// services which implement ServiceAuthFuncOverride interface.
 	// See https://github.com/grpc-ecosystem/go-grpc-middleware/blob/main/interceptors/auth/auth.go#L30.
 	opts := []grpc.ServerOption{
 		grpc.StatsHandler(otelgrpc.NewServerHandler()),
-		grpc.ChainUnaryInterceptor(
-			grpcAuth.UnaryServerInterceptor(authenticator.Authenticate),
-			interceptors.LoggingUnaryInterceptor(s.logger, s.cfg.EnableLogging), // needs to be registered after tracing interceptor to get trace id
-			middleware.UnaryServerInstrumentInterceptor(grpcRequestDuration),
-		),
-		grpc.ChainStreamInterceptor(
-			interceptors.TracingStreamInterceptor(tracer),
-			grpcAuth.StreamServerInterceptor(authenticator.Authenticate),
-			middleware.StreamServerInstrumentInterceptor(grpcRequestDuration),
-		),
+		grpc.ChainUnaryInterceptor(unaryInterceptors...),
+		grpc.ChainStreamInterceptor(streamInterceptors...),
 	}
 
 	if s.cfg.TLSConfig != nil {

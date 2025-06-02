@@ -2,7 +2,6 @@ package resource
 
 import (
 	"context"
-	"fmt"
 	"hash/fnv"
 	"time"
 
@@ -25,7 +24,7 @@ import (
 
 func ProvideDistributorServer(cfg *setting.Cfg, features featuremgmt.FeatureToggles, authnInterceptor interceptors.Authenticator, registerer prometheus.Registerer, tracer trace.Tracer, ring *ring.Ring, ringClientPool *ringclient.Pool) (grpcserver.Provider, error) {
 	var err error
-	grpcHandler, err := grpcserver.ProvideServiceWithNoAuth(cfg, features, tracer, registerer)
+	grpcHandler, err := grpcserver.ProvideService(cfg, features, nil, tracer, registerer)
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +242,6 @@ func (ds *distributorServer) getClientToDistributeRequest(ctx context.Context, n
 
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		fmt.Println("not ok")
 		md = make(metadata.MD)
 	}
 
