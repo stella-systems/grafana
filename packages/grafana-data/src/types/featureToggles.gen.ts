@@ -269,10 +269,6 @@ export interface FeatureToggles {
   */
   lokiRunQueriesInParallel?: boolean;
   /**
-  * Placeholder feature flag for internal testing
-  */
-  wargamesTesting?: boolean;
-  /**
   * Allow core plugins to be loaded as external
   * @default true
   */
@@ -375,10 +371,6 @@ export interface FeatureToggles {
   */
   alertmanagerRemotePrimary?: boolean;
   /**
-  * Disable the internal Alertmanager and only use the external one defined.
-  */
-  alertmanagerRemoteOnly?: boolean;
-  /**
   * Change the way annotation permissions work by scoping them to folders and dashboards.
   * @default true
   */
@@ -428,11 +420,6 @@ export interface FeatureToggles {
   * @default true
   */
   logsInfiniteScrolling?: boolean;
-  /**
-  * Enables users to easily configure alert notifications by specifying a contact point directly when editing or creating an alert rule
-  * @default true
-  */
-  alertingSimplifiedRouting?: boolean;
   /**
   * Enable filtering menu displayed when text of a log line is selected
   * @default true
@@ -532,6 +519,10 @@ export interface FeatureToggles {
   * Enable grafana's embedded kube-aggregator
   */
   kubernetesAggregator?: boolean;
+  /**
+  * Enable CAP token based authentication in grafana's embedded kube-aggregator
+  */
+  kubernetesAggregatorCapTokenAuth?: boolean;
   /**
   * Enable new expression parser
   */
@@ -688,10 +679,6 @@ export interface FeatureToggles {
   */
   exploreLogsLimitedTimeRange?: boolean;
   /**
-  * Used in Home for users who want to return to the onboarding flow or quickly find popular config pages
-  */
-  homeSetupGuide?: boolean;
-  /**
   * Enables the gRPC client to authenticate with the App Platform by using ID & access tokens
   */
   appPlatformGrpcClientAuth?: boolean;
@@ -790,11 +777,6 @@ export interface FeatureToggles {
   */
   jaegerBackendMigration?: boolean;
   /**
-  * Uses the original report or dashboard time range instead of making an absolute transformation
-  * @default true
-  */
-  reportingUseRawTimeRange?: boolean;
-  /**
   * Enables removing the reducer from the alerting UI when creating a new alert rule and using instant query
   * @default true
   */
@@ -854,19 +836,13 @@ export interface FeatureToggles {
   */
   teamHttpHeadersMimir?: boolean;
   /**
-  * Test feature toggle to see how cohorts could be set up AB testing
-  * @default false
+  * Enables LBAC for datasources for Tempo to apply LBAC filtering of traces to the client requests for users in teams
   */
-  ABTestFeatureToggleA?: boolean;
+  teamHttpHeadersTempo?: boolean;
   /**
   * Use new **Combobox** component for template variables
   */
   templateVariablesUsesCombobox?: boolean;
-  /**
-  * Test feature toggle to see how cohorts could be set up AB testing
-  * @default false
-  */
-  ABTestFeatureToggleB?: boolean;
   /**
   * Enables Advisor app
   */
@@ -931,10 +907,6 @@ export interface FeatureToggles {
   */
   alertRuleRestore?: boolean;
   /**
-  * Enables writing to data sources for Grafana-managed recording rules.
-  */
-  grafanaManagedRecordingRulesDatasources?: boolean;
-  /**
   * Enables running Infinity queries in parallel
   */
   infinityRunQueriesInParallel?: boolean;
@@ -943,9 +915,15 @@ export interface FeatureToggles {
   */
   inviteUserExperimental?: boolean;
   /**
-  * Enables the alerting migration UI, to migrate datasource-managed rules to Grafana-managed rules
+  * Enables the alerting migration UI, to migrate data source-managed rules to Grafana-managed rules
+  * @default true
   */
   alertingMigrationUI?: boolean;
+  /**
+  * Enables a UI feature for importing rules from a Prometheus file to Grafana-managed rules
+  * @default true
+  */
+  alertingImportYAMLUI?: boolean;
   /**
   * Enables the unified storage history pruner
   * @default true
@@ -1030,4 +1008,14 @@ export interface FeatureToggles {
   * Use proxy-based read-only objects for plugin extensions instead of deep cloning
   */
   extensionsReadOnlyProxy?: boolean;
+  /**
+  * Enables restore deleted dashboards feature
+  * @default false
+  */
+  restoreDashboards?: boolean;
+  /**
+  * Skip token rotation if it was already rotated less than 5 seconds ago
+  * @default false
+  */
+  skipTokenRotationIfRecent?: boolean;
 }

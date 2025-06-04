@@ -2492,18 +2492,21 @@ These plugins are hidden in the catalog.
 Enter a comma-separated list of plugin identifiers to install on startup, using the Grafana catalog as the source.
 Preinstalled plugins cannot be uninstalled from the Grafana user interface; they need to be removed from this list first.
 
+Plugins are installed asynchronously, as a background process.
+This means that Grafana starts up faster, but the plugins may not be available immediately.
+
 To pin plugins to a specific version, use the format `plugin_id@version`, for example,`grafana-piechart-panel@1.6.0`. If no version is specified, the latest version is installed. _The plugin is automatically updated_ to the latest version when a new version is available in the Grafana plugin catalog on startup (except for new major versions).
 
 To use a custom URL to download a plugin, use the format `plugin_id@version@url`, for example, `grafana-piechart-panel@1.6.0@https://example.com/grafana-piechart-panel-1.6.0.zip`.
 
-By default, Grafana installs some suggested plugins on startup. Refer to the default configuration file for that list of plugins.
+By default, Grafana installs some suggested plugins on startup. For a list of default preinstalled plugins, refer to [pkg/setting/setting_plugins.go:35](https://github.com/grafana/grafana/blob/main/pkg/setting/setting_plugins.go#L35-L40).
 
-#### `preinstall_async`
+#### `preinstall_sync`
 
-By default, plugins are preinstalled asynchronously, as a background process.
-This means that Grafana starts up faster, but the plugins may not be available immediately.
-If you need a plugin to be installed for provisioning, set this option to `false`.
-This causes Grafana to wait for the plugins to be installed before starting up and fail if a plugin can't be installed.
+Enter a comma-separated list of plugin identifiers to install on startup, using the Grafana catalog as the source.
+Same as `preinstall`, but installs plugins synchronously.
+
+These will be installed before starting Grafana. Useful when used with provisioning.
 
 #### `preinstall_disabled`
 
@@ -2706,34 +2709,6 @@ Some feature toggles for stable features are on by default. Use this setting to 
 
 <hr>
 
-### `[feature_management]`
-
-The options in this section configure the experimental Feature Toggle Admin Page feature, which is enabled using the `featureToggleAdminPage` feature toggle. Grafana Labs offers support on a best-effort basis, and breaking changes might occur prior to the feature being made generally available.
-
-For more information, refer to [Configure feature toggles](feature-toggles/).
-
-#### `allow_editing`
-
-Lets you switch the feature toggle state in the feature management page. The default is `false`.
-
-#### `update_webhook`
-
-Set the URL of the controller that manages the feature toggle updates. If not set, feature toggles in the feature management page are read-only.
-
-{{< admonition type="note" >}}
-The API for feature toggle updates has not been defined yet.
-{{< /admonition >}}
-
-#### `hidden_toggles`
-
-Hide additional specific feature toggles from the feature management page. By default, feature toggles in the `unknown`, `experimental`, and `private preview` stages are hidden from the UI. Use this option to hide toggles in the `public preview`, `general availability`, and `deprecated` stages.
-
-#### `read_only_toggles`
-
-Use to disable updates for additional specific feature toggles in the feature management page. By default, feature toggles can only be updated if they are in the `general availability` and `deprecated`stages. Use this option to disable updates for toggles in those stages.
-
-<hr>
-
 ### `[date_formats]`
 
 This section controls system-wide defaults for date formats used in time ranges, graphs, and date input boxes.
@@ -2781,6 +2756,14 @@ Set this to `false` to disable expressions and hide them in the Grafana UI. Defa
 #### `sql_expression_cell_limit`
 
 Set the maximum number of cells that can be passed to a SQL expression. Default is `100000`.
+
+#### `sql_expression_cell_output_limit`
+
+Set the maximum number of cells that can be returned from a SQL expression. Default is `100000`.
+
+#### `sql_expression_timeout`
+
+The duration a SQL expression will run before being cancelled. The default is `10s`.
 
 ### `[geomap]`
 

@@ -1,9 +1,9 @@
 import { css } from '@emotion/css';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { Trans } from '@grafana/i18n';
 import { Button, FilterPill, Stack, Text, useStyles2 } from '@grafana/ui';
 
-import { Trans } from '../../core/internationalization';
 import { getModKey } from '../../core/utils/browser';
 import { ToggleNode, TreeScope } from '../scopes/selector/types';
 
@@ -26,19 +26,21 @@ export function ScopesRow({ treeScopes, isDirty, apply, toggleNode }: Props) {
         <span className={styles.scopesText}>
           <Trans i18nKey={'command-palette.scopes.selected-scopes-label'}>Scopes: </Trans>
         </span>
-        {treeScopes?.map((scope) => {
-          return (
-            <FilterPill
-              key={scope.scopeName}
-              selected={true}
-              icon={'times'}
-              label={scope.title}
-              onClick={() => {
-                toggleNode(scope);
-              }}
-            />
-          );
-        })}
+        <Stack wrap={'wrap'}>
+          {treeScopes?.map((scope) => {
+            return (
+              <FilterPill
+                key={scope.scopeName}
+                selected={true}
+                icon={'times'}
+                label={scope.title}
+                onClick={() => {
+                  toggleNode(scope);
+                }}
+              />
+            );
+          })}
+        </Stack>
       </Stack>
       {isDirty && (
         <Button

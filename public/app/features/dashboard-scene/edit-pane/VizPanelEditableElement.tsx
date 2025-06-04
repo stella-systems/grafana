@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 
+import { Trans } from '@grafana/i18n';
+import { t } from '@grafana/i18n/internal';
 import { locationService } from '@grafana/runtime';
 import { sceneGraph, VizPanel } from '@grafana/scenes';
 import { Stack, Button } from '@grafana/ui';
 import { appEvents } from 'app/core/core';
-import { t, Trans } from 'app/core/internationalization';
 import { OptionsPaneCategoryDescriptor } from 'app/features/dashboard/components/PanelEditor/OptionsPaneCategoryDescriptor';
 import { OptionsPaneItemDescriptor } from 'app/features/dashboard/components/PanelEditor/OptionsPaneItemDescriptor';
 import { ShowConfirmModalEvent } from 'app/types/events';
@@ -13,7 +14,7 @@ import {
   PanelBackgroundSwitch,
   PanelDescriptionTextArea,
   PanelFrameTitleInput,
-  setPanelTitle,
+  editPanelTitleAction,
 } from '../panel-edit/getPanelFrameOptions';
 import { AutoGridItem } from '../scene/layout-auto-grid/AutoGridItem';
 import { DashboardGridItem } from '../scene/layout-default/DashboardGridItem';
@@ -114,7 +115,7 @@ export class VizPanelEditableElement implements EditableDashboardElement, BulkAc
   }
 
   public onChangeName(name: string) {
-    setPanelTitle(this.panel, name);
+    editPanelTitleAction(this.panel, name);
   }
 
   public createMultiSelectedElement(items: VizPanelEditableElement[]) {
@@ -122,10 +123,7 @@ export class VizPanelEditableElement implements EditableDashboardElement, BulkAc
   }
 
   public scrollIntoView() {
-    if (this.panel.parent instanceof AutoGridItem) {
-      this.panel.parent.scrollIntoView();
-    }
-    if (this.panel.parent instanceof DashboardGridItem) {
+    if (this.panel.parent instanceof AutoGridItem || this.panel.parent instanceof DashboardGridItem) {
       this.panel.parent.scrollIntoView();
     }
   }

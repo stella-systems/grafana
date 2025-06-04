@@ -47,6 +47,7 @@ const (
 `
 	alertingDefaultInitializationTimeout    = 30 * time.Second
 	evaluatorDefaultEvaluationTimeout       = 30 * time.Second
+	remoteAlertmanagerDefaultTimeout        = 30 * time.Second
 	schedulerDefaultAdminConfigPollInterval = time.Minute
 	schedulerDefaultExecuteAlerts           = true
 	schedulerDefaultMaxAttempts             = 3
@@ -137,9 +138,6 @@ type UnifiedAlertingSettings struct {
 
 type RecordingRuleSettings struct {
 	Enabled              bool
-	URL                  string
-	BasicAuthUsername    string
-	BasicAuthPassword    string
 	CustomHeaders        map[string]string
 	Timeout              time.Duration
 	DefaultDatasourceUID string
@@ -152,6 +150,7 @@ type RemoteAlertmanagerSettings struct {
 	TenantID     string
 	Password     string
 	SyncInterval time.Duration
+	Timeout      time.Duration
 }
 
 type UnifiedAlertingScreenshotSettings struct {
@@ -396,6 +395,10 @@ func (cfg *Cfg) ReadUnifiedAlertingSettings(iniFile *ini.File) error {
 	if err != nil {
 		return err
 	}
+	uaCfgRemoteAM.Timeout, err = gtime.ParseDuration(valueAsString(remoteAlertmanager, "timeout", (remoteAlertmanagerDefaultTimeout).String()))
+	if err != nil {
+		return err
+	}
 
 	uaCfg.RemoteAlertmanager = uaCfgRemoteAM
 
@@ -449,10 +452,7 @@ func (cfg *Cfg) ReadUnifiedAlertingSettings(iniFile *ini.File) error {
 
 	rr := iniFile.Section("recording_rules")
 	uaCfgRecordingRules := RecordingRuleSettings{
-		Enabled:              rr.Key("enabled").MustBool(false),
-		URL:                  rr.Key("url").MustString(""),
-		BasicAuthUsername:    rr.Key("basic_auth_username").MustString(""),
-		BasicAuthPassword:    rr.Key("basic_auth_password").MustString(""),
+		Enabled:              rr.Key("enabled").MustBool(true),
 		Timeout:              rr.Key("timeout").MustDuration(defaultRecordingRequestTimeout),
 		DefaultDatasourceUID: rr.Key("default_datasource_uid").MustString(""),
 	}
