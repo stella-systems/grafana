@@ -288,10 +288,9 @@ const addDashboardPanelsTool = tool.createTool({
 
 export function registerAddDashboardPanelsTool() {
   setTimeout(() => {
-    tool.registerTool(addDashboardPanelsTool, 'test-plugin', {
+    tool.registerTool(addDashboardPanelsTool, 'grafana-core', {
       category: 'utilities',
       tags: ['dashboard', 'panels'],
     });
-    tool.debugToolRegistry();
   }, 5000);
 }
