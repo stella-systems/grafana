@@ -3207,20 +3207,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/llm@npm:0.19.2":
-  version: 0.19.2
-  resolution: "@grafana/llm@npm:0.19.2"
+"@grafana/llm@file:/Users/sven/repos/00_work/grafana-llm-app/packages/grafana-llm-frontend::locator=grafana%40workspace%3A.":
+  version: 0.20.1
+  resolution: "@grafana/llm@file:/Users/sven/repos/00_work/grafana-llm-app/packages/grafana-llm-frontend#/Users/sven/repos/00_work/grafana-llm-app/packages/grafana-llm-frontend::hash=de4a6c&locator=grafana%40workspace%3A."
   dependencies:
-    "@modelcontextprotocol/sdk": "npm:^1.7.0"
+    "@modelcontextprotocol/sdk": "npm:^1.11.3"
     react-use: "npm:^17.6.0"
     semver: "npm:^7.6.3"
     uuid: "npm:^11.0.5"
+    zod: "npm:3.24.2"
   peerDependencies:
     "@grafana/data": ^10.4.0 ||^11
     "@grafana/runtime": ^10.4.0 || ^11
     react: ^18
     rxjs: ^7.8.1
-  checksum: 10/a348702f78171e43a46c0c72b1a290acadd3ea0dc81b27cb106d31e2246e75d0da1c92e41d4659f224b9f34618b2ea4013051c77c241f4e37dd11b2ef8093578
+  checksum: 10/89c5037e40ea384da124b856d4d672804568f9c0f4aa9a69723657be3c8571ab396626c4300e8d97c0e9cfc24a22deada087bbdfd78adfa3ccc20223539e5013
   languageName: node
   linkType: hard
 
@@ -4913,9 +4914,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@modelcontextprotocol/sdk@npm:^1.7.0":
-  version: 1.12.0
-  resolution: "@modelcontextprotocol/sdk@npm:1.12.0"
+"@modelcontextprotocol/sdk@npm:^1.11.3":
+  version: 1.12.1
+  resolution: "@modelcontextprotocol/sdk@npm:1.12.1"
   dependencies:
     ajv: "npm:^6.12.6"
     content-type: "npm:^1.0.5"
@@ -4928,7 +4929,7 @@ __metadata:
     raw-body: "npm:^3.0.0"
     zod: "npm:^3.23.8"
     zod-to-json-schema: "npm:^3.24.1"
-  checksum: 10/38760dc7529313901f9d643ed1d872bb903b586fdce34be169c67eeeb98ef87e1e1eef436a6ed5f919a35c2c709c6cbb915d335fe2c6b0a504a400e9337d65e4
+  checksum: 10/ee16d62af47da465e1c508efc784df17951b6590553d5ea03326e9a67896e35b06a9defd7960ea8b9fe32a6d00ff18c30f00ef3d07c60b833a42f3fe5c443401
   languageName: node
   linkType: hard
 
@@ -17788,7 +17789,7 @@ __metadata:
     "@grafana/google-sdk": "npm:0.1.2"
     "@grafana/i18n": "workspace:*"
     "@grafana/lezer-logql": "npm:0.2.7"
-    "@grafana/llm": "npm:0.19.2"
+    "@grafana/llm": "file:/Users/sven/repos/00_work/grafana-llm-app/packages/grafana-llm-frontend"
     "@grafana/monaco-logql": "npm:^0.0.8"
     "@grafana/o11y-ds-frontend": "workspace:*"
     "@grafana/plugin-e2e": "npm:2.0.0"
@@ -18104,6 +18105,7 @@ __metadata:
     whatwg-fetch: "npm:3.6.20"
     yaml: "npm:^2.0.0"
     yargs: "npm:^17.5.1"
+    zod: "npm:3.24.2"
   dependenciesMeta:
     prettier@3.4.2:
       unplugged: true
@@ -32261,6 +32263,13 @@ __metadata:
   peerDependencies:
     zod: ^3.24.1
   checksum: 10/1af291b4c429945c9568c2e924bdb7c66ab8d139cbeb9a99b6e9fc9e1b02863f85d07759b9303714f07ceda3993dcaf0ebcb80d2c18bb2aaf5502b2c1016affd
+  languageName: node
+  linkType: hard
+
+"zod@npm:3.24.2":
+  version: 3.24.2
+  resolution: "zod@npm:3.24.2"
+  checksum: 10/604c62a8cf8e330d78b106a557f4b44f5d14845d20b1360a423ccc09b58cb8525ccf7e4b40cf1bd4852d22393d2c67774b5817ec5a2fedab25f543b36ed15943
   languageName: node
   linkType: hard
 

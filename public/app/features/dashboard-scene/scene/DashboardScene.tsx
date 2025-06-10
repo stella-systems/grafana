@@ -60,6 +60,7 @@ import { gridItemToPanel } from '../serialization/transformSceneToSaveModel';
 import { DecoratedRevisionModel } from '../settings/VersionsEditView';
 import { DashboardEditView } from '../settings/utils';
 import { historySrv } from '../settings/version-history';
+import { registerAddDashboardPanelsTool } from '../tool/addDashboardPanels';
 import { DashboardModelCompatibilityWrapper } from '../utils/DashboardModelCompatibilityWrapper';
 import { isInCloneChain } from '../utils/clone';
 import { dashboardSceneGraph } from '../utils/dashboardSceneGraph';
@@ -839,3 +840,5 @@ export class DashboardVariableDependency implements SceneVariableDependencyConfi
     }
   }
 }
+
+registerAddDashboardPanelsTool();
