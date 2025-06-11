@@ -32,5 +32,7 @@ type RoleSpec struct {
 
 // NewRoleSpec creates a new RoleSpec object.
 func NewRoleSpec() *RoleSpec {
-	return &RoleSpec{}
+	return &RoleSpec{
+		Permissions: []RolespecPermission{},
+	}
 }
