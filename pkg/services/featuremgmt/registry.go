@@ -1764,6 +1764,15 @@ var (
 			HideFromDocs:      true,
 			Expression:        "false",
 		},
+		{
+			Name:              "alertingStateHistoryPrometheus",
+			Description:       "Enables the Prometheus state history writer for alert rules.",
+			Stage:             FeatureStageExperimental,
+			Owner:             grafanaAlertingSquad,
+			HideFromAdminPage: true,
+			HideFromDocs:      true,
+			Expression:        "false",
+		},
 	}
 )
 
