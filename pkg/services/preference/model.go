@@ -65,7 +65,7 @@ type SavePreferenceCommand struct {
 	WeekStart         string                  `json:"weekStart,omitempty"`
 	Theme             string                  `json:"theme,omitempty"`
 	Language          string                  `json:"language,omitempty"`
-	Locale            string                  `json:"locale,omitempty"`
+	RegionalFormat    string                  `json:"regionalFormat,omitempty"`
 	QueryHistory      *QueryHistoryPreference `json:"queryHistory,omitempty"`
 	CookiePreferences []CookieType            `json:"cookiePreferences,omitempty"`
 	Navbar            *NavbarPreference       `json:"navbar,omitempty"`
@@ -82,7 +82,7 @@ type PatchPreferenceCommand struct {
 	WeekStart         *string                 `json:"weekStart,omitempty"`
 	Theme             *string                 `json:"theme,omitempty"`
 	Language          *string                 `json:"language,omitempty"`
-	Locale            *string                 `json:"locale,omitempty"`
+	RegionalFormat    *string                 `json:"regionalFormat,omitempty"`
 	QueryHistory      *QueryHistoryPreference `json:"queryHistory,omitempty"`
 	CookiePreferences []CookieType            `json:"cookiePreferences,omitempty"`
 	Navbar            *NavbarPreference       `json:"navbar,omitempty"`
@@ -90,7 +90,7 @@ type PatchPreferenceCommand struct {
 
 type PreferenceJSONData struct {
 	Language          string                 `json:"language"`
-	Locale            string                 `json:"locale"`
+	RegionalFormat    string                 `json:"regionalFormat"`
 	QueryHistory      QueryHistoryPreference `json:"queryHistory"`
 	CookiePreferences map[string]struct{}    `json:"cookiePreferences"`
 	Navbar            NavbarPreference       `json:"navbar"`
