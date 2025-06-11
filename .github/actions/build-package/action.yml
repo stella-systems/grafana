@@ -76,9 +76,6 @@ inputs:
     description: Docker registry of produced images
     required: false
 outputs:
-  directory:
-    description: Directory where `grafana-build` is cloned
-    value: ${{ steps.output.outputs.directory }}
   dist-dir:
     description: Directory where artifacts are placed
     value: ${{ steps.output.outputs.dist_dir }}
@@ -99,7 +96,6 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "GRAFANA_BUILD_PATH=${GB_PATH:-grafana-build}" >> "$GITHUB_ENV"
         echo "GRAFANA_PATH=${{ github.workspace }}/${GRAFANA_DIR}" >> "$GITHUB_ENV"
         echo "ENTERPRISE_PATH=${{ github.workspace }}/${{ inputs.grafana-enterprise-path }}" >> "$GITHUB_ENV"
       env:
@@ -129,16 +125,14 @@ runs:
         CHECKSUM: ${{ inputs.checksum }}
       with:
         verb: run
-        workdir: ${{ env.GRAFANA_BUILD_PATH }}
-        args: go run ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --go-version=${GRAFANA_GO_VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
+        args: go run -C ${GRAFANA_PATH} ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --go-version=${GRAFANA_GO_VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
     - id: output
       shell: bash
       env:
         OUTFILE: ${{ inputs.output }}
       run: |
-        echo "dist_dir=${GRAFANA_BUILD_PATH}/dist" | tee -a $GITHUB_OUTPUT
-        echo "directory=${GRAFANA_BUILD_PATH}" | tee -a $GITHUB_OUTPUT
-        echo "file=${GRAFANA_BUILD_PATH}/${OUTFILE}" | tee -a $GITHUB_OUTPUT
+        echo "dist_dir=${GRAFANA_PATH}/dist" | tee -a $GITHUB_OUTPUT
+        echo "file=${GRAFANA_PATH}/${OUTFILE}" | tee -a $GITHUB_OUTPUT
         echo "grafana_commit=$(git -C ${GRAFANA_PATH} rev-parse HEAD)" | tee -a $GITHUB_OUTPUT
         echo "enterprise_commit=$(git -C ${ENTERPRISE_PATH} rev-parse HEAD)" | tee -a $GITHUB_OUTPUT
         echo "version=$(cat ${GRAFANA_BUILD_PATH}/dist/VERSION)" | tee -a $GITHUB_OUTPUT
