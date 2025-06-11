@@ -11,13 +11,6 @@ inputs:
         * `pro:docker:llinux/amd64`
     required: true
     type: string
-  go-version:
-    type: string
-    required: false
-  go-version-file:
-    type: string
-    required: false
-    default: go.mod
   grafana-path:
     description: Path to a clone of the 'grafana' repo
     default: grafana
@@ -102,12 +95,6 @@ runs:
         GB_PATH: ${{ inputs.path }}
         GRAFANA_DIR: ${{ inputs.grafana-path }}
         ENTERPRISE_DIR: ${{ inputs.enterprise-path }}
-    - shell: bash
-      run: echo "GRAFANA_GO_VERSION=${GO_VERSION:-`grep 'go 1.' ${GO_VERSION_FILE} |  cut -d\  -f2`}" >> "$GITHUB_ENV"
-      env:
-        GO_VERSION: ${{ inputs.go-version }}
-        GO_VERSION_FILE: ${{ inputs.go-version-file }}
-        GRAFANA_PATH: ${{ inputs.grafana-path }}
     - name: Build Grafana Enterprise packages
       uses: dagger/dagger-for-github@e47aba410ef9bb9ed81a4d2a97df31061e5e842e
       env:
@@ -125,7 +112,7 @@ runs:
         CHECKSUM: ${{ inputs.checksum }}
       with:
         verb: run
-        args: go run -C ${GRAFANA_PATH} ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --go-version=${GRAFANA_GO_VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
+        args: go run -C ${GRAFANA_PATH} ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
     - id: output
       shell: bash
       env:
