@@ -80,6 +80,7 @@ jobs:
         id: build
         with:
           artifacts: ${{ matrix.artifacts }}
+          checksum: true
           grafana-path: .
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ env.GRAFANA_VERSION }}
