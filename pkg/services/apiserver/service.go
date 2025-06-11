@@ -553,6 +553,7 @@ func useNamespaceFromPath(path string, user *user.SignedInUser) {
 			ns, err := types.ParseNamespace(parts[3])
 			if err == nil {
 				user.Namespace = ns.Value
+				user.OrgID = ns.OrgID
 			}
 		}
 	}
