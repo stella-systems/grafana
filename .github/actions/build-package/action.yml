@@ -69,10 +69,12 @@ inputs:
   docker-org:
     type: string
     description: Docker org of produced images
+    default: grafana
     required: false
   docker-registry:
     type: string
     description: Docker registry of produced images
+    default: docker.io
     required: false
 outputs:
   dist-dir:
