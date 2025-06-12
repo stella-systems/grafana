@@ -58,6 +58,12 @@ inputs:
     required: false
   docker-tag-format:
     type: string
+    default: "{{ .version }}-{{ .arch }}"
+    description: Go template of Docker image tag
+    required: false
+  docker-tag-format-ubuntu:
+    type: string
+    default: "{{ .version }}-ubuntu-{{ .arch }}"
     description: Go template of Docker image tag
     required: false
   docker-org:
@@ -109,10 +115,11 @@ runs:
         DOCKER_ORG: ${{ inputs.docker-org }}
         DOCKER_REGISTRY: ${{ inputs.docker-registry }}
         TAG_FORMAT: ${{ inputs.docker-tag-format }}
+        UBUNTU_TAG_FORMAT: ${{ inputs.docker-tag-format-ubuntu }}
         CHECKSUM: ${{ inputs.checksum }}
       with:
         verb: run
-        args: go run -C ${GRAFANA_PATH} ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
+        args: go run -C ${GRAFANA_PATH} ./pkg/build/cmd artifacts --artifacts ${ARTIFACTS} --grafana-dir=${GRAFANA_PATH} --enterprise-dir=${ENTERPRISE_PATH} --version=${VERSION} --patches-repo=${PATCHES_REPO} --patches-ref=${PATCHES_REF} --patches-path=${PATCHES_PATH} --build-id=${BUILD_ID} --tag-format="${TAG_FORMAT}" --ubuntu-tag-format="${UBUNTU_TAG_FORMAT}" --org=${DOCKER_ORG} --registry=${DOCKER_REGISTRY} --checksum=${CHECKSUM} > $OUTFILE
     - id: output
       shell: bash
       env:
