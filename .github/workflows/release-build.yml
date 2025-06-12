@@ -80,9 +80,9 @@ jobs:
       # - run: echo "GRAFANA_VERSION=v${BRANCH#release-}" >> "${GITHUB_ENV}"
       #   env:
       #     BRANCH: ${{ github.ref_name }}
-      - run: echo "GRAFANA_VERSION=v0.0.0-${RUN_ID}" >> "${GITHUB_ENV}"
+      - run: echo "GRAFANA_VERSION=v0.0.0-${RUN_NUMBER}" >> "${GITHUB_ENV}"
         env:
-          RUN_ID: ${{ github.run_id }}
+          RUN_ID: ${{ github.run_number }}
       - uses: ./.github/actions/build-package
         id: build
         with:

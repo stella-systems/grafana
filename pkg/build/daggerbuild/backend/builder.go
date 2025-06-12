@@ -160,7 +160,7 @@ func Builder(
 		WithDirectory("/src/", src, dagger.ContainerWithDirectoryOpts{
 			Include: []string{"**/*.mod", "**/*.sum", "**/*.work", ".git"},
 		}).
-		WithDirectory("/src/pkg", src.Directory("pkg")).
+		WithDirectory("/src/pkg", src.WithoutDirectory("pkg/build").Directory("pkg")).
 		WithDirectory("/src/apps", src.Directory("apps")).
 		WithDirectory("/src/emails", src.Directory("emails")).
 		WithFile("/src/pkg/server/wire_gen.go", Wire(d, src, platform, goVersion, opts.WireTag)).

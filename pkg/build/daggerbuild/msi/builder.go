@@ -18,7 +18,7 @@ func Builder(d *dagger.Client) (*dagger.Container, error) {
 		WithExec([]string{"rm", "wix314-binaries.zip"}).
 		Directory("/src")
 
-	builder := d.Container().From("scottyhardy/docker-wine:stable-9.0").
+	builder := d.Container().From("scottyhardy/docker-wine:stable-10.0-20250608").
 		WithEntrypoint([]string{}).
 		WithMountedDirectory("/src/nssm-2.24", nssm).
 		WithMountedDirectory("/src/wix3", wix3).
