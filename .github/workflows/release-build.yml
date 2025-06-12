@@ -56,6 +56,8 @@ jobs:
           - targz:grafana:linux/amd64,deb:grafana:linux/amd64,rpm:grafana:linux/amd64,docker:grafana:linux/amd64,docker:grafana:linux/amd64:ubuntu,npm:grafana,storybook
           # linux/arm64 artifacts
           - targz:grafana:linux/arm64,deb:grafana:linux/arm64,rpm:grafana:linux/arm64,docker:grafana:linux/arm64,docker:grafana:linux/arm64:ubuntu
+          # linux/s390x artifacts
+          - targz:grafana:linux/s390x,deb:grafana:linux/s390x,rpm:grafana:linux/s390x,docker:grafana:linux/s390x,docker:grafana:linux/s390x:ubuntu
           # linux/arm/v7 artifacts
           - targz:grafana:linux/arm/v7,deb:grafana:linux/arm/v7,docker:grafana:linux/arm/v7,docker:grafana:linux/arm/v7:ubuntu
           # linux/arm/v6 artifacts
@@ -69,6 +71,8 @@ jobs:
           # darwin/arm64 artifacts
           - targz:grafana:darwin/arm64
     steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392
       - uses: actions/checkout@v4
         with:
           repository: grafana/grafana
