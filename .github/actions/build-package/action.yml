@@ -128,8 +128,8 @@ runs:
       env:
         OUTFILE: ${{ inputs.output }}
       run: |
-        echo "dist_dir=${GRAFANA_PATH}/dist" | tee -a $GITHUB_OUTPUT
-        echo "file=${GRAFANA_PATH}/${OUTFILE}" | tee -a $GITHUB_OUTPUT
+        echo "dist_dir=dist" | tee -a $GITHUB_OUTPUT
+        echo "file=${OUTFILE}" | tee -a $GITHUB_OUTPUT
         echo "grafana_commit=$(git -C ${GRAFANA_PATH} rev-parse HEAD)" | tee -a $GITHUB_OUTPUT
         echo "enterprise_commit=$(git -C ${ENTERPRISE_PATH} rev-parse HEAD)" | tee -a $GITHUB_OUTPUT
         echo "version=$(cat ${GRAFANA_BUILD_PATH}/dist/VERSION)" | tee -a $GITHUB_OUTPUT
