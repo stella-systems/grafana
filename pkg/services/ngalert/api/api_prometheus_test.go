@@ -751,6 +751,7 @@ func TestRouteGetRuleStatuses(t *testing.T) {
 				fakeSch,
 				ruleStore,
 				&fakeRuleAccessControlService{},
+				fakes.NewFakeProvisioningStore(),
 			)
 
 			response := api.RouteGetRuleStatuses(c)
@@ -813,6 +814,7 @@ func TestRouteGetRuleStatuses(t *testing.T) {
 			newFakeSchedulerReader(t).setupStates(fakeAIM),
 			ruleStore,
 			accesscontrol.NewRuleService(acimpl.ProvideAccessControl(featuremgmt.WithFeatures())),
+			fakes.NewFakeProvisioningStore(),
 		)
 
 		permissions := createPermissionsForRules(slices.Concat(rulesInGroup1, rulesInGroup2, rulesInGroup3), orgID)
@@ -939,6 +941,7 @@ func TestRouteGetRuleStatuses(t *testing.T) {
 			newFakeSchedulerReader(t).setupStates(fakeAIM),
 			ruleStore,
 			accesscontrol.NewRuleService(acimpl.ProvideAccessControl(featuremgmt.WithFeatures())),
+			fakes.NewFakeProvisioningStore(),
 		)
 
 		permissions := createPermissionsForRules(allRules, orgID)
@@ -1083,6 +1086,7 @@ func TestRouteGetRuleStatuses(t *testing.T) {
 				newFakeSchedulerReader(t).setupStates(fakeAIM),
 				ruleStore,
 				accesscontrol.NewRuleService(acimpl.ProvideAccessControl(featuremgmt.WithFeatures())),
+				fakes.NewFakeProvisioningStore(),
 			)
 
 			c := &contextmodel.ReqContext{Context: &web.Context{Req: req}, SignedInUser: &user.SignedInUser{OrgID: orgID, Permissions: createPermissionsForRules(rules, orgID)}}
@@ -1959,6 +1963,7 @@ func setupAPI(t *testing.T) (*fakes.RuleStore, *fakeAlertInstanceManager, Promet
 	fakeAIM := NewFakeAlertInstanceManager(t)
 	fakeSch := newFakeSchedulerReader(t).setupStates(fakeAIM)
 	fakeAuthz := &fakeRuleAccessControlService{}
+	fakeProvisioning := fakes.NewFakeProvisioningStore()
 
 	api := *NewPrometheusSrv(
 		log.NewNopLogger(),
@@ -1966,6 +1971,7 @@ func setupAPI(t *testing.T) (*fakes.RuleStore, *fakeAlertInstanceManager, Promet
 		fakeSch,
 		fakeStore,
 		fakeAuthz,
+		fakeProvisioning,
 	)
 
 	return fakeStore, fakeAIM, api
