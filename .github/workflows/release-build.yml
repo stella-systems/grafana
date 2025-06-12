@@ -97,7 +97,7 @@ jobs:
         with:
           bucket: ${{ steps.login-to-gcs.outputs.bucket }}
           environment: prod
-          path: ${{ steps.build.outputs.dist-dir }}
+          glob: ${{ steps.build.outputs.dist-dir }}/*
           bucket_path: ${{ env.GRAFANA_VERSION }}
       - name: Upload manifest
         uses: grafana/shared-workflows/actions/push-to-gcs@push-to-gcs-v0.2.0
