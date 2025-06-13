@@ -15,9 +15,6 @@ RoleSpec: {
 	group: string
 	permissions: [...#Permission]
 
-	// Required for authz checks
-	internalID: int64
-
 	// TODO:
 	// delegatable?: bool
 	// created?

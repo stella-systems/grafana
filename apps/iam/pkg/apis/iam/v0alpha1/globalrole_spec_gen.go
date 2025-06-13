@@ -18,16 +18,14 @@ func NewGlobalRolespecPermission() *GlobalRolespecPermission {
 // +k8s:openapi-gen=true
 type GlobalRoleSpec struct {
 	// Display name of the role
-	Title       string                     `json:"title"`
-	Version     int64                      `json:"version"`
-	Group       string                     `json:"group"`
-	Permissions []GlobalRolespecPermission `json:"permissions"`
-	// Required for authz checks
+	Title   string `json:"title"`
+	Version int64  `json:"version"`
+	Group   string `json:"group"`
 	// TODO:
 	// delegatable?: bool
 	// created?
 	// updated?
-	InternalID int64 `json:"internalID"`
+	Permissions []GlobalRolespecPermission `json:"permissions"`
 }
 
 // NewGlobalRoleSpec creates a new GlobalRoleSpec object.
