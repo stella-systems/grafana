@@ -5122,6 +5122,11 @@
       "body-name-already-exists": "Ya existe un dashboard con el mismo nombre en la carpeta seleccionada. ¿Seguro que quieres guardar este dashboard?",
       "title-name-already-exists": "Este nombre ya existe"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

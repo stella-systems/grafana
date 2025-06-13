@@ -5102,6 +5102,11 @@
       "body-name-already-exists": "Dasbor dengan nama yang sama di folder yang dipilih sudah ada. Ingin tetap menyimpan dasbor ini?",
       "title-name-already-exists": "Nama sudah ada"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

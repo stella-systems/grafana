@@ -5122,6 +5122,11 @@
       "body-name-already-exists": "Egy irányítópult már létezik ugyanazzal a névvel a kijelölt mappában. Biztosan menti ezt az irányítópultot?",
       "title-name-already-exists": "A név már létezik"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

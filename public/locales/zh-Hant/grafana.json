@@ -5102,6 +5102,11 @@
       "body-name-already-exists": "所選資料夾中已存在名稱相同的儀表板。仍要儲存此儀表板嗎？",
       "title-name-already-exists": "名稱已存在"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

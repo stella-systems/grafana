@@ -5102,6 +5102,11 @@
       "body-name-already-exists": "所选文件夹中已存在具有相同名称的数据面板。您仍然要保存此数据面板吗？",
       "title-name-already-exists": "名称已存在"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

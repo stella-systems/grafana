@@ -5102,6 +5102,11 @@
       "body-name-already-exists": "선택한 폴더에 동일한 이름의 대시보드가 이미 존재합니다. 그래도 이 대시보드를 저장하시겠어요?",
       "title-name-already-exists": "이미 존재하는 이름입니다"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""

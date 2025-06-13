@@ -5162,6 +5162,11 @@
       "body-name-already-exists": "Ve vybrané složce už existuje nástěnka se stejným názvem. Chcete přesto tuto nástěnku uložit?",
       "title-name-already-exists": "Název již existuje"
     },
+    "on-open-snapshot-original-dashboard": {
+      "title": {
+        "proceed-to-external-site": ""
+      }
+    },
     "on-remove-panel": {
       "text": {
         "remove-panel": ""
