@@ -22,18 +22,20 @@ import (
 type testDataSources struct {
 	dsfakes.FakeDataSourceService
 
-	prom1, prom2 *TestRemoteWriteTarget
+	prom1, prom2, prom3 *TestRemoteWriteTarget
 }
 
 func (t *testDataSources) Reset() {
 	t.prom1.Reset()
 	t.prom2.Reset()
+	t.prom3.Reset()
 }
 
 func setupDataSources(t *testing.T) *testDataSources {
 	res := &testDataSources{
 		prom1: NewTestRemoteWriteTarget(t),
 		prom2: NewTestRemoteWriteTarget(t),
+		prom3: NewTestRemoteWriteTarget(t),
 	}
 
 	t.Cleanup(func() {
@@ -41,6 +43,9 @@ func setupDataSources(t *testing.T) *testDataSources {
 	})
 	t.Cleanup(func() {
 		res.prom2.Close()
+	})
+	t.Cleanup(func() {
+		res.prom3.Close()
 	})
 
 	p1, _ := res.AddDataSource(context.Background(), &datasources.AddDataSourceCommand{
@@ -58,6 +63,19 @@ func setupDataSources(t *testing.T) *testDataSources {
 	})
 	p2.URL = res.prom2.srv.URL + "/api/prom"
 	res.prom2.ExpectedPath = "/api/prom/push"
+
+	// Add a PDC-enabled Prometheus datasource for testing
+	p3, _ := res.AddDataSource(context.Background(), &datasources.AddDataSourceCommand{
+		UID:  "prom-3",
+		Type: datasources.DS_PROMETHEUS,
+		JsonData: simplejson.MustJson([]byte(`{
+			"prometheusType":"Prometheus",
+			"enableSecureSocksProxy":true,
+			"secureSocksProxyUsername":"testuser"
+		}`)),
+	})
+	p3.URL = res.prom3.srv.URL
+	res.prom3.ExpectedPath = "/api/v1/write"
 
 	// Add a non-Prometheus datasource.
 	_, _ = res.AddDataSource(context.Background(), &datasources.AddDataSourceCommand{
@@ -101,7 +119,7 @@ func TestDatasourceWriter(t *testing.T) {
 	t.Run("when writing an unknown datasource then an error is returned", func(t *testing.T) {
 		datasources.Reset()
 
-		err := writer.WriteDatasource(context.Background(), "prom-3", "metric", time.Now(), frames, 1, map[string]string{})
+		err := writer.WriteDatasource(context.Background(), "prom-unknown", "metric", time.Now(), frames, 1, map[string]string{})
 		require.Error(t, err)
 		require.EqualError(t, err, "data source not found")
 	})
@@ -143,6 +161,32 @@ func TestDatasourceWriter(t *testing.T) {
 
 		assert.Equal(t, headers[header1], datasources.prom1.LastHeaders.Get(header1))
 		assert.Equal(t, headers[header2], datasources.prom1.LastHeaders.Get(header2))
+	})
+
+	t.Run("when PDC is enabled proxy options are set", func(t *testing.T) {
+		datasources.Reset()
+
+		cfg = DatasourceWriterConfig{
+			Timeout:              time.Second * 5,
+			DefaultDatasourceUID: "prom-3",
+		}
+		writer = NewDatasourceWriter(cfg, datasources, httpclient.NewProvider(), clock.New(), log.New("test"), met)
+
+		err := writer.WriteDatasource(context.Background(), "prom-3", "metric", time.Now(), frames, 1, map[string]string{})
+		require.NoError(t, err)
+	})
+
+	t.Run("when PDC is disabled proxy options are not set", func(t *testing.T) {
+		datasources.Reset()
+
+		cfg = DatasourceWriterConfig{
+			Timeout:              time.Second * 5,
+			DefaultDatasourceUID: "prom-1",
+		}
+		writer = NewDatasourceWriter(cfg, datasources, httpclient.NewProvider(), clock.New(), log.New("test"), met)
+
+		err := writer.WriteDatasource(context.Background(), "prom-1", "metric", time.Now(), frames, 1, map[string]string{})
+		require.NoError(t, err)
 	})
 }
 

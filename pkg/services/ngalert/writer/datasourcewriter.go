@@ -11,14 +11,12 @@ import (
 	"time"
 
 	"github.com/benbjohnson/clock"
-	"github.com/grafana/grafana-plugin-sdk-go/backend/httpclient"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	gocache "github.com/patrickmn/go-cache"
 
 	"github.com/grafana/grafana/pkg/infra/log"
 	"github.com/grafana/grafana/pkg/services/datasources"
 	"github.com/grafana/grafana/pkg/services/ngalert/metrics"
-	"github.com/grafana/grafana/pkg/services/pluginsintegration/adapters"
 )
 
 const (
@@ -72,14 +70,6 @@ func NewDatasourceWriter(
 		metrics:            metrics,
 		writers:            gocache.New(cacheExpiration, cacheCleanupInterval),
 	}
-}
-
-func (w *DatasourceWriter) decrypt(ds *datasources.DataSource) (map[string]string, error) {
-	decryptedJsonData, err := w.datasources.DecryptedValues(context.Background(), ds)
-	if err != nil {
-		w.l.Error("Failed to decrypt secure json data", "error", err)
-	}
-	return decryptedJsonData, err
 }
 
 func getPrometheusType(ds *datasources.DataSource) string {
@@ -162,12 +152,7 @@ func (w *DatasourceWriter) makeWriter(ctx context.Context, orgID int64, dsUID st
 		return nil, errors.New("can only write to data sources of type prometheus")
 	}
 
-	is, err := adapters.ModelToInstanceSettings(ds, w.decrypt)
-	if err != nil {
-		return nil, err
-	}
-
-	ho, err := is.HTTPClientOptions(ctx)
+	ho, err := w.datasources.HTTPClientOptions(ctx, ds)
 	if err != nil {
 		return nil, err
 	}
@@ -177,20 +162,17 @@ func (w *DatasourceWriter) makeWriter(ctx context.Context, orgID int64, dsUID st
 		return nil, err
 	}
 
-	headers := make(http.Header)
+	if ho.Header == nil {
+		ho.Header = make(http.Header)
+	}
 	for k, v := range w.cfg.CustomHeaders {
-		headers.Add(k, v)
+		ho.Header.Add(k, v)
 	}
 
 	cfg := PrometheusWriterConfig{
-		URL: u.String(),
-		HTTPOptions: httpclient.Options{
-			Timeouts:  ho.Timeouts,
-			TLS:       ho.TLS,
-			BasicAuth: ho.BasicAuth,
-			Header:    headers,
-		},
-		Timeout: w.cfg.Timeout,
+		URL:         u.String(),
+		HTTPOptions: *ho,
+		Timeout:     w.cfg.Timeout,
 	}
 	if err != nil {
 		return nil, err
