@@ -22,16 +22,20 @@ const printSection = (title, items) => {
 };
 
 let markdown = '';
+const filteredChanges = data.changes.filter((change) => change?.diff?.length > 0);
 
 if (data.removals.length > 0) {
-  markdown += printSection('Removals', data.removals);
+  markdown += printSection('Removals', filteredRemovals);
 }
-if (data.changes.length > 0) {
-  markdown += printSection('Changes', data.changes);
+if (filteredChanges.length > 0) {
+  markdown += printSection('Changes', filteredChanges);
 }
 
-if (data.removals.length > 0 || data.changes.length > 0) {
-  markdown += printAffectedPluginsSection(data);
+if (data.removals.length > 0 || filteredChanges.length > 0) {
+  markdown += printAffectedPluginsSection({
+    removals: data.removals,
+    changes: filteredChanges,
+  });
 }
 
 console.log(markdown);
