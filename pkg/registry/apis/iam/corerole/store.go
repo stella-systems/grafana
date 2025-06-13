@@ -61,37 +61,46 @@ func (s *LegacyStore) ConvertToTable(ctx context.Context, object runtime.Object,
 }
 
 func (s *LegacyStore) List(ctx context.Context, options *internalversion.ListOptions) (runtime.Object, error) {
-	res, err := common.List(
-		ctx, resource.GetName(), s.ac, common.PaginationFromListOptions(options),
-		func(ctx context.Context, ns claims.NamespaceInfo, p common.Pagination) (*common.ListResponse[iamv0.CoreRole], error) {
-			found, err := s.store.ListCoreRoles(ctx, ns, legacy.ListCoreRolesQuery{
-				Pagination: p,
-			})
+	// res, err := common.List(
+	// 	ctx, resource.GetName(), s.ac, common.PaginationFromListOptions(options),
+	// 	func(ctx context.Context, ns claims.NamespaceInfo, p common.Pagination) (*common.ListResponse[iamv0.CoreRole], error) {
+	// 		found, err := s.store.ListCoreRoles(ctx, ns, legacy.ListCoreRolesQuery{
+	// 			Pagination: p,
+	// 		})
 
-			if err != nil {
-				return nil, err
-			}
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
 
-			items := make([]iamv0.CoreRole, 0, len(found.Roles))
-			for _, r := range found.Roles {
-				items = append(items, toCRItem(r, ns.Value))
-			}
+	// 		items := make([]iamv0.CoreRole, 0, len(found.Roles))
+	// 		for _, r := range found.Roles {
+	// 			items = append(items, toCRItem(r, ns.Value))
+	// 		}
 
-			return &common.ListResponse[iamv0.CoreRole]{
-				Items:    items,
-				RV:       found.RV,
-				Continue: found.Continue,
-			}, nil
+	// 		return &common.ListResponse[iamv0.CoreRole]{
+	// 			Items:    items,
+	// 			RV:       found.RV,
+	// 			Continue: found.Continue,
+	// 		}, nil
+	// 	},
+	// )
+
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// obj := &iamv0.CoreRoleList{Items: res.Items}
+	// obj.Continue = common.OptionalFormatInt(res.Continue)
+	// obj.ResourceVersion = common.OptionalFormatInt(res.RV)
+
+	obj := &iamv0.CoreRoleList{
+		Items: []iamv0.CoreRole{},
+		ListMeta: metav1.ListMeta{
+			Continue:        common.OptionalFormatInt(0),
+			ResourceVersion: common.OptionalFormatInt(0),
 		},
-	)
-
-	if err != nil {
-		return nil, err
 	}
 
-	obj := &iamv0.CoreRoleList{Items: res.Items}
-	obj.Continue = common.OptionalFormatInt(res.Continue)
-	obj.ResourceVersion = common.OptionalFormatInt(res.RV)
 	return obj, nil
 }
 

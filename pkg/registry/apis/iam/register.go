@@ -27,6 +27,7 @@ import (
 	"github.com/grafana/grafana/pkg/registry/apis/iam/user"
 	"github.com/grafana/grafana/pkg/services/accesscontrol"
 	"github.com/grafana/grafana/pkg/services/apiserver/builder"
+	"github.com/grafana/grafana/pkg/services/featuremgmt"
 	"github.com/grafana/grafana/pkg/services/ssosettings"
 	"github.com/grafana/grafana/pkg/storage/legacysql"
 )
@@ -50,6 +51,7 @@ type IdentityAccessManagementAPIBuilder struct {
 }
 
 func RegisterAPIService(
+	features featuremgmt.FeatureToggles,
 	apiregistration builder.APIRegistrar,
 	ssoService ssosettings.Service,
 	sql db.DB,
@@ -64,7 +66,7 @@ func RegisterAPIService(
 		authorizer:           authorizer,
 		accessClient:         client,
 		display:              user.NewLegacyDisplayREST(store),
-		enableAuthZResources: true,
+		enableAuthZResources: features.IsEnabledGlobally(featuremgmt.FlagKubernetesAuthzApis),
 	}
 	apiregistration.RegisterAPI(builder)
 
