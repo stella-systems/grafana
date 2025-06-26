@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   vale:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     container:
       image: grafana/vale:latest

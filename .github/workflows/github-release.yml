@@ -37,6 +37,7 @@ permissions:
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub release (manually invoked)

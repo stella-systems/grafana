@@ -10,6 +10,7 @@ permissions: {}
 
 jobs:
   lint-frontend-verify-i18n:
+    if: github.repository == 'grafana/grafana'
     name: Verify i18n
     runs-on: ubuntu-latest
     permissions:
@@ -37,6 +38,7 @@ jobs:
             exit 1
         fi
   lint-frontend-prettier:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: read
       id-token: write
@@ -56,6 +58,7 @@ jobs:
     - run: yarn run prettier:check
     - run: yarn run lint
   lint-frontend-prettier-enterprise:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: read
       id-token: write
@@ -78,6 +81,7 @@ jobs:
     - run: yarn run prettier:check
     - run: yarn run lint
   lint-frontend-typecheck:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: read
       id-token: write
@@ -96,6 +100,7 @@ jobs:
     - run: yarn install --immutable --check-cache
     - run: yarn run typecheck
   lint-frontend-typecheck-enterprise:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: read
       id-token: write
@@ -117,6 +122,7 @@ jobs:
     - run: yarn install --immutable --check-cache
     - run: yarn run typecheck
   lint-frontend-betterer:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: read
       id-token: write

@@ -14,6 +14,7 @@ on:
 
 jobs:
   trivy-scan:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4

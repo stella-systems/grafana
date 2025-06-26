@@ -18,6 +18,7 @@ permissions:
 
 jobs:
   bump-version:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Grafana

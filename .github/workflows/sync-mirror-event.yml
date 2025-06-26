@@ -15,6 +15,7 @@ permissions: {}
 # This is run after the pull request has been merged, so we'll run against the target branch
 jobs:
   dispatch-job:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     permissions:
       id-token: write

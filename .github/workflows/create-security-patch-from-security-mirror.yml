@@ -16,9 +16,10 @@ on:
 # This is run before the pull request has been merged, so we'll run against the src branch
 jobs:
   trigger_downstream_create_security_patch:
+    if: github.repository == 'grafana/grafana'
     concurrency: create-patch-${{ github.ref_name }}
     uses: grafana/security-patch-actions/.github/workflows/create-patch.yml@main # zizmor: ignore[unpinned-uses]
-    if: github.repository == 'grafana/grafana-security-mirror'
+#    if: github.repository == 'grafana/grafana-security-mirror'
     with:
       repo: "${{ github.repository }}"
       src_ref: "${{ github.head_ref }}" # this is the source branch name, Ex: "feature/newthing"

@@ -19,6 +19,7 @@ env:
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     name: Backend Unit Tests
     runs-on: ubuntu-latest-8-cores
     steps:

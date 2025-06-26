@@ -1,6 +1,6 @@
 name: Migrate open PRs
 # Migrate open PRs from a superseded release branch to the current release branch and notify authors
-on: 
+on:
   workflow_call:
     inputs:
       from:
@@ -42,6 +42,7 @@ on:
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     steps:
       - name: "Generate token"
