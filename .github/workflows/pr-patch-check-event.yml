@@ -19,6 +19,7 @@ permissions: {}
 # target branch onto the source branch, to verify compatibility before merging.
 jobs:
   dispatch-job:
+    if: github.repository == 'grafana/grafana'
     permissions:
       id-token: write
       contents: read

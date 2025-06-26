@@ -16,8 +16,9 @@ permissions:
   id-token: write
 jobs:
   update:
+    if: github.repository == 'grafana/grafana'
     runs-on: "ubuntu-latest"
-    if: ${{ github.actor == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository }}
+#    if: ${{ github.actor == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository }}
     continue-on-error: true
     steps:
     - name: Retrieve GitHub App secrets
@@ -60,7 +61,7 @@ jobs:
 
     - name: Commit and push workspace changes
       env:
-        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
       run: |
         if ! git diff --exit-code --quiet; then
           echo "Committing and pushing workspace changes"

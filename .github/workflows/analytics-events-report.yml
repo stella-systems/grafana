@@ -5,6 +5,7 @@ on:
 
 jobs:
   generate-report:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -33,6 +33,7 @@ permissions:
 
 jobs:
   build-and-publish:
+    if: github.repository == 'grafana/grafana'
     env:
       PLUGIN_ID: ${{ inputs.plugin_id }}
     name: Build and publish ${{ inputs.plugin_id }}
@@ -162,7 +163,7 @@ jobs:
         if: steps.check_backend.outputs.has_backend == 'true'
         shell: bash
         env:
-          VERSION: ${{ steps.build_frontend.outputs.version }}  
+          VERSION: ${{ steps.build_frontend.outputs.version }}
         run: |
           make build-plugin-go PLUGIN_ID=$PLUGIN_ID
       - name: package
@@ -176,7 +177,7 @@ jobs:
       - name: Check existing release
         env:
           GCOM_TOKEN: ${{ env.PLUGINS_GCOM_TOKEN }}
-          VERSION: ${{ steps.build_frontend.outputs.version }}  
+          VERSION: ${{ steps.build_frontend.outputs.version }}
         run: |
           api_res=$(curl -X 'GET' -H "Authorization: Bearer $GCOM_TOKEN" \
             '${{ env.GCOM_API}}/api/plugins/$PLUGIN_ID?version=$VERSION' \
@@ -197,12 +198,12 @@ jobs:
       - name: Publish release to Google Cloud Storage
         working-directory: ${{ steps.get_dir.outputs.dir }}
         env:
-          VERSION: ${{ steps.build_frontend.outputs.version }}  
+          VERSION: ${{ steps.build_frontend.outputs.version }}
         run: |
           echo "Publish release to Google Cloud Storage:"
           touch ci/packages/windows ci/packages/darwin ci/packages/linux ci/packages/any
           gsutil -m cp -r ci/packages/*windows* gs://${{ env.GCP_BUCKET }}/$PLUGIN_ID/release/${VERSION}/windows
-          gsutil -m cp -r ci/packages/*linux* gs://${{ env.GCP_BUCKET }}/$PLUGIN_ID/release/${VERSION}/linux 
+          gsutil -m cp -r ci/packages/*linux* gs://${{ env.GCP_BUCKET }}/$PLUGIN_ID/release/${VERSION}/linux
           gsutil -m cp -r ci/packages/*darwin* gs://${{ env.GCP_BUCKET }}/$PLUGIN_ID/release/${VERSION}/darwin
           gsutil -m cp -r ci/packages/*any* gs://${{ env.GCP_BUCKET }}/$PLUGIN_ID/release/${VERSION}/any
       - name: Publish new plugin version on grafana.com
@@ -210,7 +211,7 @@ jobs:
         working-directory: ${{ steps.get_dir.outputs.dir }}
         env:
           GCOM_TOKEN: ${{ env.PLUGINS_GCOM_TOKEN }}
-          VERSION: ${{ steps.build_frontend.outputs.version }}  
+          VERSION: ${{ steps.build_frontend.outputs.version }}
         run: |
           echo "Publish new plugin version on grafana.com:"
           echo "Plugin version: ${VERSION}"

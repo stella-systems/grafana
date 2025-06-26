@@ -37,6 +37,7 @@ permissions: {}
 
 jobs:
   push-changelog-to-main:
+    if: github.repository == 'grafana/grafana'
     permissions:
       contents: write
       pull-requests: write

@@ -16,6 +16,7 @@ permissions: {}
 
 jobs:
   config:
+    if: github.repository == 'grafana/grafana'
     runs-on: "ubuntu-latest"
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
@@ -29,8 +30,9 @@ jobs:
           fi
 
   main:
+    if: github.repository == 'grafana/grafana'
     needs: config
-    if: needs.config.outputs.has-secrets
+#    if: needs.config.outputs.has-secrets
     runs-on: ubuntu-latest
     permissions:
       contents: read

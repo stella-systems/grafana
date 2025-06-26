@@ -41,6 +41,7 @@ permissions:
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     outputs:
       branch: ${{ steps.branch.outputs.branch }}

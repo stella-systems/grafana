@@ -2,7 +2,7 @@ name: run-dashboard-search-e2e
 
 on:
   workflow_run:
-    workflows: 
+    workflows:
       - trigger-dashboard-search-e2e
     types:
       - completed
@@ -15,8 +15,9 @@ permissions: {}
 
 jobs:
   setup:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+#    if: github.event.pull_request.draft == false
     outputs:
       ini_files: ${{ steps.get_files.outputs.ini_files }}
 
