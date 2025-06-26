@@ -1,5 +1,5 @@
 name: trigger-dashboard-search-e2e
-# triggers the dashboard search e2e tests which runs async 
+# triggers the dashboard search e2e tests which runs async
 # doesn't block prs, allows setting up notifications from grafana
 on:
   push:
@@ -21,8 +21,9 @@ env:
 
 jobs:
   trigger-search-e2e:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+#    if: github.event.pull_request.draft == false
     steps:
       - name: Trigger Dashboard Search E2E
         run: echo "Triggered Dashboard Search e2e..."

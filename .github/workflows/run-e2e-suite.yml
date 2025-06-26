@@ -12,6 +12,7 @@ on:
 
 jobs:
   main:
+    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest-8-cores
     steps:
       - uses: actions/checkout@v4
