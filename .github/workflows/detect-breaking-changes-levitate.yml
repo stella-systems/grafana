@@ -7,13 +7,15 @@ concurrency:
   cancel-in-progress: true
 
 permissions: {}
-
 on:
-  pull_request:
-    paths:
-      - 'packages/**'
-    branches:
-      - 'main'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths:
+#      - 'packages/**'
+#    branches:
+#      - 'main'
 
 jobs:
   buildPR:

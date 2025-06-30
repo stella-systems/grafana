@@ -1,12 +1,14 @@
 name: "publish-kinds-next"
-
 on:
-  push:
-    branches:
-      - "main"
-    paths:
-      - '**/*.cue'
   workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  push:
+#    branches:
+#      - "main"
+#    paths:
+#      - '**/*.cue'
+#  workflow_dispatch:
 
 jobs:
   config:

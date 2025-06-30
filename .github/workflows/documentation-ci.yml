@@ -1,9 +1,12 @@
 name: Documentation CI
 on:
-  pull_request:
-    branches: ["main"]
-    paths: ["docs/sources/**"]
   workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    branches: ["main"]
+#    paths: ["docs/sources/**"]
+#  workflow_dispatch:
 jobs:
   vale:
     runs-on: ubuntu-latest

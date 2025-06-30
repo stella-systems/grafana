@@ -1,10 +1,13 @@
 name: PR automation
 on:
-  pull_request_target:
-    types:
-      - labeled
-      - opened
-      - synchronize
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request_target:
+#    types:
+#      - labeled
+#      - opened
+#      - synchronize
 concurrency:
   group: pr-commands-${{ github.event.number }}
 jobs:

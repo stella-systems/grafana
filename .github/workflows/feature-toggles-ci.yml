@@ -1,11 +1,13 @@
 name: Feature toggles CI
-
 on:
-  pull_request:
-    paths:
-      - 'pkg/services/featuremgmt/toggles_gen_test.go'
-      - 'pkg/services/featuremgmt/registry.go'
-      - 'docs/sources/setup-grafana/configure-grafana/feature-toggles/index.md'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths:
+#      - 'pkg/services/featuremgmt/toggles_gen_test.go'
+#      - 'pkg/services/featuremgmt/registry.go'
+#      - 'docs/sources/setup-grafana/configure-grafana/feature-toggles/index.md'
 
 jobs:
   test:

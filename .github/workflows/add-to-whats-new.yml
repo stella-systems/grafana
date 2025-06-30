@@ -1,7 +1,10 @@
 name: Add comment about adding a What's new note
 on:
-  pull_request:
-    types: [labeled]
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    types: [labeled]
 
 jobs:
   add-comment:

@@ -1,21 +1,24 @@
 name: trigger-dashboard-search-e2e
-# triggers the dashboard search e2e tests which runs async 
+# triggers the dashboard search e2e tests which runs async
 # doesn't block prs, allows setting up notifications from grafana
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - public/app/features/search/**/*.ts
-      - public/app/features/search/**/*.tsx
-      - pkg/storage/**/*.go
-  pull_request:
-    branches:
-      - main
-    paths:
-      - public/app/features/search/**/*.ts
-      - public/app/features/search/**/*.tsx
-      - pkg/storage/**/*.go
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - public/app/features/search/**/*.ts
+#      - public/app/features/search/**/*.tsx
+#      - pkg/storage/**/*.go
+#  pull_request:
+#    branches:
+#      - main
+#    paths:
+#      - public/app/features/search/**/*.ts
+#      - public/app/features/search/**/*.tsx
+#      - pkg/storage/**/*.go
 env:
   ARCH: linux-amd64
 

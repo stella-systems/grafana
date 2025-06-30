@@ -1,9 +1,11 @@
 name: Crowdin Create Tasks
-
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "0 0 * * *"
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#  # schedule:
+#  #   - cron: "0 0 * * *"
 
 jobs:
   create-tasks-in-crowdin:

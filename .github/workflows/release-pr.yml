@@ -7,31 +7,34 @@
 name: Grafana Release PR
 on:
   workflow_dispatch:
-    inputs:
-      previous_version:
-        type: string
-        required: false
-        description: 'The release version (semver, git tag, branch or commit) to use for comparison'
-      version:
-        required: true
-        type: string
-        description: The version of Grafana that is being released
-      target:
-        required: true
-        type: string
-        description: The release branch pattern (eg v9.5.x) that these changes are being merged into
-      backport:
-        required: false
-        type: string
-        description: Branch to backport these changes to
-      dry_run:
-        required: false
-        default: false
-        type: boolean
-      latest:
-        required: false
-        default: false
-        type: boolean
+  # ORIGINAL
+  #on:
+  workflow_dispatch:
+#    inputs:
+#      previous_version:
+#        type: string
+#        required: false
+#        description: 'The release version (semver, git tag, branch or commit) to use for comparison'
+#      version:
+#        required: true
+#        type: string
+#        description: The version of Grafana that is being released
+#      target:
+#        required: true
+#        type: string
+#        description: The release branch pattern (eg v9.5.x) that these changes are being merged into
+#      backport:
+#        required: false
+#        type: string
+#        description: Branch to backport these changes to
+#      dry_run:
+#        required: false
+#        default: false
+#        type: boolean
+#      latest:
+#        required: false
+#        default: false
+#        type: boolean
 
 permissions: {}
 

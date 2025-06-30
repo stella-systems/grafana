@@ -1,13 +1,15 @@
 name: Deploy pr preview
-
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - closed
-    paths:
-      - "docs/sources/**"
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    types:
+#      - opened
+#      - synchronize
+#      - closed
+#    paths:
+#      - "docs/sources/**"
 
 jobs:
   deploy-pr-preview:

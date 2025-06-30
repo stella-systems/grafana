@@ -1,7 +1,9 @@
 name: Analytics Events Report
-
 on:
   workflow_dispatch:
+
+  #on:
+#  workflow_dispatch:
 
 jobs:
   generate-report:

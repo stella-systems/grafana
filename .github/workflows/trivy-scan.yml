@@ -1,16 +1,19 @@
 name: Trivy Scan
 on:
-  pull_request:
-    # only run on PRs where go.mod/go.sum/etc have been updated
-    paths:
-      - go.*
-      - .github/workflows/trivy-scan.yml
-  push:
-    branches:
-      - main
-    paths:
-      - go.*
-      - .github/workflows/trivy-scan.yml
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    # only run on PRs where go.mod/go.sum/etc have been updated
+#    paths:
+#      - go.*
+#      - .github/workflows/trivy-scan.yml
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - go.*
+#      - .github/workflows/trivy-scan.yml
 
 jobs:
   trivy-scan:

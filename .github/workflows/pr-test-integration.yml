@@ -1,15 +1,17 @@
 name: Integration Tests
-
 on:
-  push:
-    branches:
-      - main
-      - release-*.*.*
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  push:
+#    branches:
+#      - main
+#      - release-*.*.*
+#  pull_request:
+#    types:
+#      - opened
+#      - synchronize
+#      - reopened
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

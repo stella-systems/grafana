@@ -1,14 +1,16 @@
 name: e2e suite
-
 on:
-  workflow_call:
-    inputs:
-      package:
-        type: string
-        required: true
-      suite:
-        type: string
-        required: true
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  workflow_call:
+#    inputs:
+#      package:
+#        type: string
+#        required: true
+#      suite:
+#        type: string
+#        required: true
 
 jobs:
   main:

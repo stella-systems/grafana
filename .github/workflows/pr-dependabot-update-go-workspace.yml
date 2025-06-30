@@ -1,16 +1,19 @@
 name: "Update Go Workspace for Dependabot PRs"
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - .github/workflows/pr-dependabot-update-go-workspace.yml
-      - go.mod
-      - go.sum
-      - go.work
-      - go.work.sum
-      - '**/go.mod'
-      - '**/go.sum'
-      - '**.go'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    branches: [main]
+#    paths:
+#      - .github/workflows/pr-dependabot-update-go-workspace.yml
+#      - go.mod
+#      - go.sum
+#      - go.work
+#      - go.work.sum
+#      - '**/go.mod'
+#      - '**/go.sum'
+#      - '**.go'
 permissions:
   contents: write
   id-token: write
@@ -60,7 +63,7 @@ jobs:
 
     - name: Commit and push workspace changes
       env:
-        BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
       run: |
         if ! git diff --exit-code --quiet; then
           echo "Committing and pushing workspace changes"

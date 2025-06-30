@@ -1,15 +1,18 @@
 name: Add issues and PRs to Skye project board
 on:
   workflow_dispatch:
-    inputs:
-      manual_issue_number:
-        description: 'Issue/PR number to add to project'
-        required: false
-        type: number
-  issues:
-    types: [opened]
-  pull_request:
-    types: [opened]
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#    inputs:
+#      manual_issue_number:
+#        description: 'Issue/PR number to add to project'
+#        required: false
+#        type: number
+#  issues:
+#    types: [opened]
+#  pull_request:
+#    types: [opened]
 
 permissions:
   contents: read
