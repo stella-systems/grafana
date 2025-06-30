@@ -1,18 +1,20 @@
 name: "Go Workspace Check"
-
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [main]
-    paths:
-      - .github/workflows/pr-go-workspace-check.yml
-      - go.mod
-      - go.sum
-      - go.work
-      - go.work.sum
-      - '**/go.mod'
-      - '**/go.sum'
-      - '**.go'
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#  pull_request:
+#    branches: [main]
+#    paths:
+#      - .github/workflows/pr-go-workspace-check.yml
+#      - go.mod
+#      - go.sum
+#      - go.work
+#      - go.work.sum
+#      - '**/go.mod'
+#      - '**/go.sum'
+#      - '**.go'
 
 jobs:
   check:
@@ -34,7 +36,7 @@ jobs:
     - name: Update workspace
       run: make update-workspace
 
-    - name: Check for go mod & workspace changes 
+    - name: Check for go mod & workspace changes
       run: |
         if ! git diff --exit-code --quiet; then
           echo "Changes detected:"

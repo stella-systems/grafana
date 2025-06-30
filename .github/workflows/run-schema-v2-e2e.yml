@@ -1,22 +1,23 @@
 name: Run dashboard schema v2 e2e
-
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - '**'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches:
+#      - '**'
 
 env:
   ARCH: linux-amd64
 
 jobs:
   dashboard-schema-v2-e2e:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     continue-on-error: true
-#    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout
         uses: actions/checkout@v4

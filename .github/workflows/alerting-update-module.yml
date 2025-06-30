@@ -1,7 +1,9 @@
 name: Update Alerting Module
-
 on:
   workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -9,7 +11,6 @@ concurrency:
 
 jobs:
   update-grafana:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -1,17 +1,19 @@
 name: Backend Unit Tests
-
 on:
-  pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
-  push:
-    branches:
-      - main
-      - release-*.*.*
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths-ignore:
+#      - 'docs/**'
+#      - '**/*.md'
+#  push:
+#    branches:
+#      - main
+#      - release-*.*.*
+#    paths-ignore:
+#      - 'docs/**'
+#      - '**/*.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,7 +23,7 @@ permissions: {}
 
 jobs:
   grafana:
-    # Run this workflow only for PRs from forks; if it gets merged into `main` or `release-*`, 
+    # Run this workflow only for PRs from forks; if it gets merged into `main` or `release-*`,
     # the `pr-backend-unit-tests-enterprise` workflow will run instead
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true
     strategy:

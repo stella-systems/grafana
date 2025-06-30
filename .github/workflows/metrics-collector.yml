@@ -10,17 +10,19 @@
 #
 name: Github issue metrics collection
 on:
-  schedule:
-    - cron: "*/10 * * * *"
-  issues:
-    types: [opened, closed]
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  schedule:
+#    - cron: "*/10 * * * *"
+#  issues:
+#    types: [opened, closed]
 
 permissions:
   contents: read
 
 jobs:
   config:
-    if: github.repository == 'grafana/grafana'
     runs-on: "ubuntu-latest"
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
@@ -34,9 +36,8 @@ jobs:
           fi
 
   main:
-    if: github.repository == 'grafana/grafana'
     needs: config
-#    if: needs.config.outputs.has-secrets
+    if: needs.config.outputs.has-secrets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Actions

@@ -1,11 +1,14 @@
 name: Auto-milestone
 on:
-  pull_request_target:
-    types:
-      - opened
-      - reopened
-      - closed
-      - ready_for_review
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request_target:
+#    types:
+#      - opened
+#      - reopened
+#      - closed
+#      - ready_for_review
 
 permissions:
   pull-requests: write
@@ -15,9 +18,8 @@ permissions:
 # so it must not run untrusted code (such as checking out the pull request)
 jobs:
   main:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
-#    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false
     steps:
       # Note: Github will not trigger other actions from this because it uses
       # the GITHUB_TOKEN token

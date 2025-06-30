@@ -1,15 +1,17 @@
 name: PR automation
 on:
-  pull_request_target:
-    types:
-      - labeled
-      - opened
-      - synchronize
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request_target:
+#    types:
+#      - labeled
+#      - opened
+#      - synchronize
 concurrency:
   group: pr-commands-${{ github.event.number }}
 jobs:
   config:
-    if: github.repository == 'grafana/grafana'
     runs-on: "ubuntu-latest"
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
@@ -26,9 +28,8 @@ jobs:
           fi
 
   main:
-    if: github.repository == 'grafana/grafana'
     needs: config
-#    if: needs.config.outputs.has-secrets
+    if: needs.config.outputs.has-secrets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Actions

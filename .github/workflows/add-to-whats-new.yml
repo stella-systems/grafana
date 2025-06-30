@@ -1,12 +1,14 @@
 name: Add comment about adding a What's new note
 on:
-  pull_request:
-    types: [labeled]
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    types: [labeled]
 
 jobs:
   add-comment:
-    if: github.repository == 'grafana/grafana'
-#    if: ${{ ! github.event.pull_request.head.repo.fork && contains(github.event.pull_request.labels.*.name, 'add to what''s new') }}
+    if: ${{ ! github.event.pull_request.head.repo.fork && contains(github.event.pull_request.labels.*.name, 'add to what''s new') }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write

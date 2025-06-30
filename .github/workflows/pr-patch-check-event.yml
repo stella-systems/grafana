@@ -3,15 +3,18 @@
 name: Dispatch check for patch conflicts
 run-name: dispatch-check-patch-conflicts-${{ github.base_ref }}-${{ github.head_ref }}
 on:
-  pull_request_target:
-    types:
-      - opened
-      - reopened
-      - synchronize
-    branches:
-      - "main"
-      - "v*.*.*"
-      - "release-*"
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request_target:
+#    types:
+#      - opened
+#      - reopened
+#      - synchronize
+#    branches:
+#      - "main"
+#      - "v*.*.*"
+#      - "release-*"
 
 permissions: {}
 
@@ -19,7 +22,6 @@ permissions: {}
 # target branch onto the source branch, to verify compatibility before merging.
 jobs:
   dispatch-job:
-    if: github.repository == 'grafana/grafana'
     permissions:
       id-token: write
       contents: read

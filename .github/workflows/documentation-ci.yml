@@ -1,12 +1,14 @@
 name: Documentation CI
 on:
-  pull_request:
-    branches: ["main"]
-    paths: ["docs/sources/**"]
   workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    branches: ["main"]
+#    paths: ["docs/sources/**"]
+#  workflow_dispatch:
 jobs:
   vale:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     container:
       image: grafana/vale:latest

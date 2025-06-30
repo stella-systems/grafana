@@ -1,40 +1,42 @@
 name: Create next release branch
 on:
-  workflow_call:
-    inputs:
-      ownerRepo:
-        type: string
-        description: Owner/repo of the repository where the branch is created (e.g. 'grafana/grafana')
-        required: true
-      source:
-        description: The release branch to increment (eg providing `release-11.2.3` will result in `release-11.2.4` being created)
-        type: string
-        required: true
-    secrets:
-      GRAFANA_DELIVERY_BOT_APP_ID:
-        required: true
-      GRAFANA_DELIVERY_BOT_APP_PEM:
-        required: true
-    outputs:
-      branch:
-        description: The new branch that was created
-        value: ${{ jobs.main.outputs.branch }}
   workflow_dispatch:
-    inputs:
-      ownerRepo:
-        description: Owner/repo of the repository where the branch is created (e.g. 'grafana/grafana')
-      source:
-        description: The release branch to increment (eg providing `release-11.2.3` will result in `release-11.2.4` being created)
-        type: string
-        required: true
-    secrets:
-      GRAFANA_DELIVERY_BOT_APP_ID:
-        required: true
-      GRAFANA_DELIVERY_BOT_APP_PEM:
-        required: true
+  # ORIGINAL
+  #on:
+#  workflow_call:
+#    inputs:
+#      ownerRepo:
+#        type: string
+#        description: Owner/repo of the repository where the branch is created (e.g. 'grafana/grafana')
+#        required: true
+#      source:
+#        description: The release branch to increment (eg providing `release-11.2.3` will result in `release-11.2.4` being created)
+#        type: string
+#        required: true
+#    secrets:
+#      GRAFANA_DELIVERY_BOT_APP_ID:
+#        required: true
+#      GRAFANA_DELIVERY_BOT_APP_PEM:
+#        required: true
+#    outputs:
+#      branch:
+#        description: The new branch that was created
+#        value: ${{ jobs.main.outputs.branch }}
+#  workflow_dispatch:
+#    inputs:
+#      ownerRepo:
+#        description: Owner/repo of the repository where the branch is created (e.g. 'grafana/grafana')
+#      source:
+#        description: The release branch to increment (eg providing `release-11.2.3` will result in `release-11.2.4` being created)
+#        type: string
+#        required: true
+#    secrets:
+#      GRAFANA_DELIVERY_BOT_APP_ID:
+#        required: true
+#      GRAFANA_DELIVERY_BOT_APP_PEM:
+#        required: true
 jobs:
   main:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     outputs:
       branch: ${{ steps.branch.outputs.branch }}

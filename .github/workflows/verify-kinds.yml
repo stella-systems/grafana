@@ -1,14 +1,15 @@
 name: "verify-kinds"
-
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - '**/*.cue'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    branches: [ main ]
+#    paths:
+#      - '**/*.cue'
 
 jobs:
   main:
-    if: github.repository == 'grafana/grafana'
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout Grafana repo"

@@ -1,24 +1,25 @@
 name: Documentation
-
 on:
-  pull_request:
-    paths:
-      - '*.md'
-      - 'docs/**'
-      - 'packages/**/*.md'
-      - 'latest.json'
-  push:
-    branches:
-      - main
-    paths:
-      - '*.md'
-      - 'docs/**'
-      - 'packages/**/*.md'
-      - 'latest.json'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths:
+#      - '*.md'
+#      - 'docs/**'
+#      - 'packages/**/*.md'
+#      - 'latest.json'
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - '*.md'
+#      - 'docs/**'
+#      - 'packages/**/*.md'
+#      - 'latest.json'
 
 jobs:
   docs:
-    if: github.repository == 'grafana/grafana'
     name: Build & Verify Docs
     runs-on: ubuntu-latest
     steps:
