@@ -1,22 +1,23 @@
 name: Verify Storybook
-
 on:
-  pull_request:
-    paths:
-      - 'packages/grafana-ui/**'
-      - '!docs/**'
-      - '!*.md'
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/grafana-ui/**'
-      - '!docs/**'
-      - '!*.md'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths:
+#      - 'packages/grafana-ui/**'
+#      - '!docs/**'
+#      - '!*.md'
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'packages/grafana-ui/**'
+#      - '!docs/**'
+#      - '!*.md'
 
 jobs:
   verify-storybook:
-    if: github.repository == 'grafana/grafana'
     name: Verify Storybook
     runs-on: ubuntu-latest
 

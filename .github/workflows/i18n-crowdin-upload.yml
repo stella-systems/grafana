@@ -1,16 +1,17 @@
 name: Crowdin Upload Action
-
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'public/locales/en-US/grafana.json'
-    branches:
-      - main
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#  push:
+#    paths:
+#      - 'public/locales/en-US/grafana.json'
+#    branches:
+#      - main
 
 jobs:
   upload-sources-to-crowdin:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
 
     steps:

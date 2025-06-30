@@ -7,17 +7,18 @@ concurrency:
   cancel-in-progress: true
 
 permissions: {}
-
 on:
-  pull_request:
-    paths:
-      - 'packages/**'
-    branches:
-      - 'main'
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    paths:
+#      - 'packages/**'
+#    branches:
+#      - 'main'
 
 jobs:
   buildPR:
-    if: github.repository == 'grafana/grafana'
     name: Build PR packages artifacts
     runs-on: ubuntu-latest
     defaults:
@@ -68,7 +69,6 @@ jobs:
           path: './pr/pr_built_packages.zip'
 
   buildBase:
-    if: github.repository == 'grafana/grafana'
     name: Build Base packages artifacts
     runs-on: ubuntu-latest
     permissions:
@@ -120,7 +120,6 @@ jobs:
           path: './base/base_built_packages.zip'
 
   Detect:
-    if: github.repository == 'grafana/grafana'
     name: Detect breaking changes between PR and base
     runs-on: ubuntu-latest
     needs: ['buildPR', 'buildBase']
@@ -185,7 +184,6 @@ jobs:
 
 
   Report:
-    if: github.repository == 'grafana/grafana'
     name: Report breaking changes in PR comment
     runs-on: ubuntu-latest
     needs: ['Detect']

@@ -1,21 +1,23 @@
 name: Build and release core plugins
-
 on:
   workflow_dispatch:
-    inputs:
-      plugin_id:
-        description: "ID of the plugin you want to publish"
-        required: true
-        type: choice
-        options:
-          - grafana-azure-monitor-datasource
-          - grafana-pyroscope-datasource
-          - grafana-testdata-datasource
-          - jaeger
-          - parca
-          - stackdriver
-          - tempo
-          - zipkin
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#    inputs:
+#      plugin_id:
+#        description: "ID of the plugin you want to publish"
+#        required: true
+#        type: choice
+#        options:
+#          - grafana-azure-monitor-datasource
+#          - grafana-pyroscope-datasource
+#          - grafana-testdata-datasource
+#          - jaeger
+#          - parca
+#          - stackdriver
+#          - tempo
+#          - zipkin
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}-${{ inputs.plugin_id }}
@@ -33,7 +35,6 @@ permissions:
 
 jobs:
   build-and-publish:
-    if: github.repository == 'grafana/grafana'
     env:
       PLUGIN_ID: ${{ inputs.plugin_id }}
     name: Build and publish ${{ inputs.plugin_id }}

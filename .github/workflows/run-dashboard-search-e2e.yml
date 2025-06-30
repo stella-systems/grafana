@@ -1,12 +1,14 @@
 name: run-dashboard-search-e2e
-
 on:
-  workflow_run:
-    workflows:
-      - trigger-dashboard-search-e2e
-    types:
-      - completed
   workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  workflow_run:
+#    workflows:
+#      - trigger-dashboard-search-e2e
+#    types:
+#      - completed
+#  workflow_dispatch:
 
 env:
   ARCH: linux-amd64
@@ -15,9 +17,8 @@ permissions: {}
 
 jobs:
   setup:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
-#    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft == false
     outputs:
       ini_files: ${{ steps.get_files.outputs.ini_files }}
 

@@ -1,13 +1,14 @@
 name: Crowdin Download Action
-
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#  schedule:
+#    - cron: "0 0 * * *"
 
 jobs:
   download-sources-from-crowdin:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
 
     permissions:

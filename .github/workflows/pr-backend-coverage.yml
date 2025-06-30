@@ -1,13 +1,15 @@
 name: Coverage
-
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
+  # ORIGINAL
+  #on:
+#  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+#    paths-ignore:
+#      - 'docs/**'
+#      - '**/*.md'
 
 permissions:
   contents: read
@@ -19,7 +21,6 @@ env:
 
 jobs:
   main:
-    if: github.repository == 'grafana/grafana'
     name: Backend Unit Tests
     runs-on: ubuntu-latest-8-cores
     steps:

@@ -1,15 +1,17 @@
 name: Integration Tests
-
 on:
-  push:
-    branches:
-      - main
-      - release-*.*.*
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  push:
+#    branches:
+#      - main
+#      - release-*.*.*
+#  pull_request:
+#    types:
+#      - opened
+#      - synchronize
+#      - reopened
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,7 +19,6 @@ concurrency:
 
 jobs:
   sqlite:
-    if: github.repository == 'grafana/grafana'
     strategy:
       matrix:
         shard: [
@@ -47,7 +48,6 @@ jobs:
           readarray -t PACKAGES <<< "$(./scripts/ci/backend-tests/pkgs-with-tests-named.sh -b TestIntegration | ./scripts/ci/backend-tests/shard.sh -N"$SHARD" -d-)"
           go test -tags=sqlite -timeout=5m -run '^TestIntegration' "${PACKAGES[@]}"
   mysql:
-    if: github.repository == 'grafana/grafana'
     strategy:
       matrix:
         shard: [
@@ -91,7 +91,6 @@ jobs:
           readarray -t PACKAGES <<< "$(./scripts/ci/backend-tests/pkgs-with-tests-named.sh -b TestIntegration | ./scripts/ci/backend-tests/shard.sh -N"$SHARD" -d-)"
           go test -p=1 -tags=mysql -timeout=5m -run '^TestIntegration' "${PACKAGES[@]}"
   postgres:
-    if: github.repository == 'grafana/grafana'
     strategy:
       matrix:
         shard: [

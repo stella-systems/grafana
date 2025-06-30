@@ -1,12 +1,13 @@
 name: "Codeowners Validator"
-
 on:
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#    branches: [ main ]
 
 jobs:
   codeowners-validator:
-    if: github.repository == 'grafana/grafana'
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository, which is validated in the next step

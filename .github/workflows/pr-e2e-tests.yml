@@ -1,11 +1,13 @@
 name: End-to-end tests
-
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - release-*.*.*
+  workflow_dispatch:
+  # ORIGINAL
+  #on:
+#  pull_request:
+#  push:
+#    branches:
+#      - main
+#      - release-*.*.*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
