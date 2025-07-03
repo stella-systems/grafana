@@ -14,6 +14,17 @@ export function getSelectableThemes() {
     allowedExtraThemes.push('sapphiredusk');
     allowedExtraThemes.push('tron');
     allowedExtraThemes.push('gloom');
+
+
+    allowedExtraThemes.push('stella');
+
+    allowedExtraThemes.push('debug');
+    allowedExtraThemes.push('aubergine');
+    allowedExtraThemes.push('mars');
+    allowedExtraThemes.push('matrix');
+    allowedExtraThemes.push('synthwave');
+    allowedExtraThemes.push('victorian');
+    allowedExtraThemes.push('zen');
   }
 
   return getBuiltInThemes(allowedExtraThemes);
