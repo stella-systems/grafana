@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
   # ORIGINAL
   #on:
-  workflow_dispatch:
+#  workflow_dispatch:
 #    inputs:
 #      previous_version:
 #        type: string
