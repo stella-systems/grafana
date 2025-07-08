@@ -249,6 +249,61 @@ func TestAuthenticateJWT(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "Custom org and role mapping",
+			wantID: &authn.Identity{
+				OrgID:           0,
+				OrgName:         "",
+				OrgRoles:        map[int64]identity.RoleType{4: identity.RoleEditor, 7: identity.RoleAdmin},
+				Login:           "eai-doe",
+				Groups:          []string{"foo", "bar"},
+				Name:            "Eai Doe",
+				Email:           "eai.doe@cor.po",
+				IsGrafanaAdmin:  boolPtr(false),
+				AuthenticatedBy: login.JWTModule,
+				AuthID:          "1234567890",
+				IsDisabled:      false,
+				HelpFlags1:      0,
+				ClientParams: authn.ClientParams{
+					SyncUser:        true,
+					AllowSignUp:     true,
+					FetchSyncedUser: true,
+					SyncOrgRoles:    true,
+					SyncPermissions: true,
+					SyncTeams:       true,
+					LookUpParams: login.UserLookupParams{
+						Email: stringPtr("eai.doe@cor.po"),
+						Login: stringPtr("eai-doe"),
+					},
+				},
+			},
+			verifyProvider: func(context.Context, string) (map[string]any, error) {
+				return map[string]any{
+					"sub":                "1234567890",
+					"email":              "eai.doe@cor.po",
+					"preferred_username": "eai-doe",
+					"name":               "Eai Doe",
+					"roles":              []string{"grafana-write"},
+					"groups":             []string{"foo", "bar"},
+					"orgs":               []string{"Org4", "Org007"},
+				}, nil
+			},
+			cfg: &setting.Cfg{
+				JWTAuth: setting.AuthJWTSettings{
+					Enabled:                 true,
+					HeaderName:              jwtHeaderName,
+					EmailClaim:              "email",
+					UsernameClaim:           "preferred_username",
+					AutoSignUp:              true,
+					AllowAssignGrafanaAdmin: true,
+					RoleAttributeStrict:     true,
+					RoleAttributePath:       "contains(roles[*], 'grafana-write') && 'Editor' || 'Viewer'",
+					GroupsAttributePath:     "groups[]",
+					OrgAttributePath:        "orgs[]",
+					OrgMapping:              []string{"*:_:None", "Org007:Org007:Admin"},
+				},
+			},
+		},
 	}
 
 	for _, tc := range testCases {
@@ -261,7 +316,7 @@ func TestAuthenticateJWT(t *testing.T) {
 
 			jwtClient := ProvideJWT(jwtService,
 				connectors.ProvideOrgRoleMapper(tc.cfg,
-					&orgtest.FakeOrgService{ExpectedOrgs: []*org.OrgDTO{{ID: 4, Name: "Org4"}, {ID: 5, Name: "Org5"}}}),
+					&orgtest.FakeOrgService{ExpectedOrgs: []*org.OrgDTO{{ID: 4, Name: "Org4"}, {ID: 5, Name: "Org5"}, {ID: 6, Name: "Org66"}, {ID: 7, Name: "Org007"}}}),
 				tc.cfg)
 			validHTTPReq := &http.Request{
 				Header: map[string][]string{

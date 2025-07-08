@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	mapperMatchAllOrgID = -1
-	escapeStr           = `\`
+	mapperMatchAllOrgID     = -1
+	mapperMatchDynamicOrgID = -2
+	escapeStr               = `\`
 )
 
 var separatorRegexp = regexp.MustCompile(":")
@@ -69,6 +70,11 @@ func (m *OrgRoleMapper) MapOrgRoles(
 	userOrgRoles := getMappedOrgRoles(externalOrgs, mappingCfg.orgMapping)
 
 	if err := m.handleGlobalOrgMapping(userOrgRoles); err != nil {
+		// Cannot map global org roles, return nil (prevent resetting asignments)
+		return nil
+	}
+
+	if err := m.handleDynamicOrgMapping(userOrgRoles, externalOrgs); err != nil {
 		// Cannot map global org roles, return nil (prevent resetting asignments)
 		return nil
 	}
@@ -135,6 +141,30 @@ func (m *OrgRoleMapper) handleGlobalOrgMapping(orgRoles map[int64]org.RoleType) 
 	return nil
 }
 
+func (m *OrgRoleMapper) handleDynamicOrgMapping(orgRoles map[int64]org.RoleType, externalOrgs []string) error {
+	// No dynamic role mapping => return
+	globalRole, ok := orgRoles[mapperMatchDynamicOrgID]
+	if !ok {
+		return nil
+	}
+
+	// Remove the global role mapping
+	delete(orgRoles, mapperMatchDynamicOrgID)
+
+	// Global mapping => for all orgs get top role mapping
+	for _, orgIDStr := range externalOrgs {
+		orgID, err := m.getOrgIDForInternalMapping(context.Background(), orgIDStr)
+		if err != nil {
+			m.logger.Warn("Could not fetch OrgID. Skipping.", "err", err, "org", orgIDStr)
+			continue
+		}
+		orga := int64(orgID)
+		orgRoles[orga] = getTopRole(orgRoles[orga], globalRole)
+	}
+
+	return nil
+}
+
 // ParseOrgMappingSettings parses the `org_mapping` setting and returns an internal representation of the mapping.
 // If the roleStrict is enabled, the mapping should contain a valid role for each org.
 // FIXME: Consider introducing a struct to represent the org mapping settings
@@ -182,6 +212,10 @@ func (m *OrgRoleMapper) ParseOrgMappingSettings(ctx context.Context, mappings []
 func (m *OrgRoleMapper) getOrgIDForInternalMapping(ctx context.Context, orgIdCfg string) (int, error) {
 	if orgIdCfg == "*" {
 		return mapperMatchAllOrgID, nil
+	}
+
+	if orgIdCfg == "_" {
+		return mapperMatchDynamicOrgID, nil
 	}
 
 	if orgIdCfg == "" {
