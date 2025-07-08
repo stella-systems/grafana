@@ -10,3 +10,5 @@ export { default as tron } from './tron';
 export { default as victorian } from './victorian';
 export { default as zen } from './zen';
 export { default as gloom } from './gloom';
+
+export { default as stella } from './stella';
