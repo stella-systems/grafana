@@ -84,7 +84,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
   img: css({
     alignSelf: 'center',
     height: theme.spacing(3),
-    width: theme.spacing(3),
+    width: theme.spacing(8),
   }),
   mobileCloseButton: css({
     [theme.breakpoints.up('md')]: {
