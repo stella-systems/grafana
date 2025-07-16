@@ -1,24 +1,4 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "type": "dashboard"
-      }
-    ]
-  },
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": 116,
   "links": [],
   "panels": [
     {
@@ -77,9 +57,7 @@
       "type": "dashlist"
     }
   ],
-  "preload": false,
-  "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 22,
   "tags": [],
   "templating": {
     "list": []
@@ -88,11 +66,10 @@
     "from": "now-6h",
     "to": "now"
   },
+  "editable": false,
   "timepicker": {
     "hidden": true
   },
   "timezone": "browser",
-  "title": "Welcome to StellaNow Visualizations",
-  "uid": "bb08be52-5644-4b89-b02b-1095e836a374",
-  "version": 1
+  "title": "Welcome to StellaNow Visualizations"
 }
