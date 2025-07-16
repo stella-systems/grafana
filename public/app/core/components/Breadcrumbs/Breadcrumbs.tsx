@@ -48,6 +48,7 @@ function getFlexGrow(index: number, length: number) {
 const getStyles = (theme: GrafanaTheme2) => {
   return {
     breadcrumbs: css({
+      color: '#B1B7B3',
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'nowrap',

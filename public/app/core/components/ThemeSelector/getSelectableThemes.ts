@@ -3,6 +3,7 @@ import { config } from '@grafana/runtime';
 
 export function getSelectableThemes() {
   const allowedExtraThemes = [];
+  allowedExtraThemes.push('stella');
 
   if (config.featureToggles.extraThemes) {
     allowedExtraThemes.push('debug');
@@ -14,11 +15,6 @@ export function getSelectableThemes() {
     allowedExtraThemes.push('sapphiredusk');
     allowedExtraThemes.push('tron');
     allowedExtraThemes.push('gloom');
-
-
-    allowedExtraThemes.push('stella');
-
-    allowedExtraThemes.push('debug');
     allowedExtraThemes.push('aubergine');
     allowedExtraThemes.push('mars');
     allowedExtraThemes.push('matrix');

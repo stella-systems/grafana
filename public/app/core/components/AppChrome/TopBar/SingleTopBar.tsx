@@ -118,6 +118,8 @@ export const SingleTopBar = memo(function SingleTopBar({
 
 const getStyles = (theme: GrafanaTheme2, menuDockedAndOpen: boolean) => ({
   layout: css({
+    color: '#B1B7B3',
+    backgroundColor: '#0E0E0E',
     height: getChromeHeaderLevelHeight(),
     display: 'flex',
     gap: theme.spacing(2),
@@ -137,7 +139,7 @@ const getStyles = (theme: GrafanaTheme2, menuDockedAndOpen: boolean) => ({
   img: css({
     alignSelf: 'center',
     height: theme.spacing(3),
-    width: theme.spacing(8),
+    width: theme.spacing(9),
   }),
   kioskToggle: css({
     [theme.breakpoints.down('lg')]: {

@@ -66,12 +66,16 @@ MegaMenuHeader.displayName = 'MegaMenuHeader';
 const getStyles = (theme: GrafanaTheme2) => ({
   dockMenuButton: css({
     display: 'none',
+    fill: '#B1B7B3',
+    color: '#B1B7B3',
 
     [theme.breakpoints.up('xl')]: {
       display: 'inline-flex',
     },
   }),
   header: css({
+    color: '#B1B7B3',
+    backgroundColor: '#0E0E0E',
     alignItems: 'center',
     borderBottom: `1px solid ${theme.colors.border.weak}`,
     display: 'flex',
@@ -84,7 +88,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
   img: css({
     alignSelf: 'center',
     height: theme.spacing(3),
-    width: theme.spacing(8),
+    width: theme.spacing(9),
   }),
   mobileCloseButton: css({
     [theme.breakpoints.up('md')]: {
