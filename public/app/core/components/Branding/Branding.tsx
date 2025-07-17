@@ -11,7 +11,7 @@ export interface BrandComponentProps {
 
 export const LoginLogo: FC<BrandComponentProps & { logo?: string }> = ({ className, logo }) => {
   /** StellaNow customization */
-  return <img className={className} src={`${logo ? logo : 'https://console.prod.stella.cloud/_next/static/media/branding.eb4dc66b.svg'}`} alt="StellaNow" />;
+  return <img className={className} src={`${logo ? logo : 'https://stellanow-dev-visualization.s3.eu-west-1.amazonaws.com/dashboards/logo/app_header_logo_white.svg'}`} alt="StellaNow" />;
   /** StellaNow customization - END */
 };
 
@@ -46,7 +46,7 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
   /** StellaNow customization */
-  return <img className={className} src="https://console.prod.stella.cloud/_next/static/media/branding.eb4dc66b.svg" alt="StellaNow" />;
+  return <img className={className} src="https://stellanow-dev-visualization.s3.eu-west-1.amazonaws.com/dashboards/logo/app_header_logo_white.svg" alt="StellaNow" />;
   /** StellaNow customization - END */
 };
 

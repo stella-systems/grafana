@@ -162,7 +162,6 @@ func (hs *HTTPServer) setIndexViewData(c *contextmodel.ReqContext) (*dtos.IndexV
 		NewGrafanaVersionExists:             hs.grafanaUpdateChecker.UpdateAvailable(),
 		AppName:                             setting.ApplicationName,
 		AppNameBodyClass:                    "app-grafana",
-		FavIcon:                             "public/img/fav32.png",
 		AppleTouchIcon:                      "public/img/apple-touch-icon.png",
 		AppTitle:                            "Grafana",
 		NavTree:                             navTree,
@@ -170,6 +169,10 @@ func (hs *HTTPServer) setIndexViewData(c *contextmodel.ReqContext) (*dtos.IndexV
 		LoadingLogo:                         "public/img/grafana_icon.svg",
 		IsDevelopmentEnv:                    hs.Cfg.Env == setting.Dev,
 		Assets:                              assets,
+		/** StellaNow customization */
+		//FavIcon:                             "public/img/fav32.png",
+		FavIcon: "https://stellanow-dev-visualization.s3.eu-west-1.amazonaws.com/dashboards/logo/app_favicon-32x32.png",
+		/** StellaNow customization - END */
 	}
 
 	if hs.Cfg.CSPEnabled {
