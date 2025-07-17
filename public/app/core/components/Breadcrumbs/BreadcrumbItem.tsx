@@ -61,7 +61,8 @@ const getStyles = (theme: GrafanaTheme2) => {
       color: theme.colors.text.secondary,
     }),
     breadcrumbLink: css({
-      color: theme.colors.text.primary,
+      color: theme.colors.text.secondary,
+      // color: theme.colors.text.primary,
       '&:hover': {
         textDecoration: 'underline',
       },

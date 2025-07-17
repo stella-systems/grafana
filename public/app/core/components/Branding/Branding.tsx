@@ -10,7 +10,9 @@ export interface BrandComponentProps {
 }
 
 export const LoginLogo: FC<BrandComponentProps & { logo?: string }> = ({ className, logo }) => {
-  return <img className={className} src={`${logo ? logo : 'public/img/grafana_icon.svg'}`} alt="Grafana" />;
+  /** StellaNow customization */
+  return <img className={className} src={`${logo ? logo : 'https://stellanow-dev-visualization.s3.eu-west-1.amazonaws.com/dashboards/logo/app_header_logo_white.svg'}`} alt="StellaNow" />;
+  /** StellaNow customization - END */
 };
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
@@ -43,7 +45,9 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
 };
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/grafana_icon.svg" alt="Grafana" />;
+  /** StellaNow customization */
+  return <img className={className} src="https://stellanow-dev-visualization.s3.eu-west-1.amazonaws.com/dashboards/logo/app_header_logo_white.svg" alt="StellaNow" />;
+  /** StellaNow customization - END */
 };
 
 const LoginBoxBackground = () => {
@@ -59,8 +63,10 @@ export class Branding {
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
-  static AppTitle = 'Grafana';
-  static LoginTitle = 'Welcome to Grafana';
+  /** StellaNow customization */
+  static AppTitle = 'Visualization';
+  static LoginTitle = 'Welcome to StellaNow Visualization';
+  /** StellaNow customization - END */
   static HideEdition = false;
   static GetLoginSubTitle = (): null | string => {
     return null;

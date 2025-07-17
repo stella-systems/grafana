@@ -48,6 +48,9 @@ function getFlexGrow(index: number, length: number) {
 const getStyles = (theme: GrafanaTheme2) => {
   return {
     breadcrumbs: css({
+      /** StellaNow customization */
+      color: '#B1B7B3',
+      /** StellaNow customization - END */
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'nowrap',

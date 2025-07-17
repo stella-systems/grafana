@@ -66,12 +66,20 @@ MegaMenuHeader.displayName = 'MegaMenuHeader';
 const getStyles = (theme: GrafanaTheme2) => ({
   dockMenuButton: css({
     display: 'none',
+    /** StellaNow customization */
+    fill: '#B1B7B3',
+    color: '#B1B7B3',
+    /** StellaNow customization - END */
 
     [theme.breakpoints.up('xl')]: {
       display: 'inline-flex',
     },
   }),
   header: css({
+    /** StellaNow customization */
+    color: '#B1B7B3',
+    backgroundColor: '#0E0E0E',
+    /** StellaNow customization - END */
     alignItems: 'center',
     borderBottom: `1px solid ${theme.colors.border.weak}`,
     display: 'flex',
@@ -84,7 +92,9 @@ const getStyles = (theme: GrafanaTheme2) => ({
   img: css({
     alignSelf: 'center',
     height: theme.spacing(3),
-    width: theme.spacing(3),
+    /** StellaNow customization */
+    width: theme.spacing(9),
+    /** StellaNow customization - END */
   }),
   mobileCloseButton: css({
     [theme.breakpoints.up('md')]: {
