@@ -11,4 +11,6 @@ export { default as victorian } from './victorian';
 export { default as zen } from './zen';
 export { default as gloom } from './gloom';
 
+/** StellaNow customization */
 export { default as stella } from './stella';
+/** StellaNow customization - END */

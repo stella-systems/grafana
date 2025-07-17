@@ -1,3 +1,4 @@
+/** StellaNow customization */
 import { NewThemeOptions } from '../createTheme';
 
 const stellaTheme: NewThemeOptions = {
@@ -34,3 +35,4 @@ const stellaTheme: NewThemeOptions = {
 };
 
 export default stellaTheme;
+/** StellaNow customization - END */

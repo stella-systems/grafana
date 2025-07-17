@@ -10,7 +10,9 @@ var themes = []ThemeDTO{
 	{ID: "light", Type: "light"},
 	{ID: "dark", Type: "dark"},
 	{ID: "system", Type: "dark"},
+	/** StellaNow customization */
 	{ID: "stella", Type: "light"},
+	/** StellaNow customization - END */
 	{ID: "debug", Type: "dark", IsExtra: true},
 	{ID: "aubergine", Type: "dark", IsExtra: true},
 	{ID: "desertbloom", Type: "light", IsExtra: true},

@@ -118,8 +118,10 @@ export const SingleTopBar = memo(function SingleTopBar({
 
 const getStyles = (theme: GrafanaTheme2, menuDockedAndOpen: boolean) => ({
   layout: css({
+    /** StellaNow customization */
     color: '#B1B7B3',
     backgroundColor: '#0E0E0E',
+    /** StellaNow customization - END */
     height: getChromeHeaderLevelHeight(),
     display: 'flex',
     gap: theme.spacing(2),
@@ -139,7 +141,9 @@ const getStyles = (theme: GrafanaTheme2, menuDockedAndOpen: boolean) => ({
   img: css({
     alignSelf: 'center',
     height: theme.spacing(3),
+    /** StellaNow customization */
     width: theme.spacing(9),
+    /** StellaNow customization - END */
   }),
   kioskToggle: css({
     [theme.breakpoints.down('lg')]: {
