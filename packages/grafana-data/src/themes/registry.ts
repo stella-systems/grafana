@@ -58,7 +58,9 @@ for (const [id, theme] of Object.entries(extraThemes)) {
     id,
     name: theme.name ?? '',
     build: () => createTheme(theme),
-    isExtra: true,
+    /** StellaNow customization */
+    isExtra: theme.name !== 'Stella', // Stella is the default theme, so we don't consider it an extra theme
+    /** StellaNow customization - END */
   });
 }
 
